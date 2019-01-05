@@ -33,11 +33,11 @@ from icu import ICUtzinfo
 # Project-specific modules
 import globals  # Overall configurations and global variables
 import mpc  # player commands
-from Display import *  ## Control of the 16-digit alphanumeric display
-from Buttons import *  ## Button controls from GPIO pins
-from Clock import *  ## Time functions for the display
-from Player import *  ## MP3 player functions
-from Weather import *  ## Weather functions
+from Display import *  # Control of the 16-digit alphanumeric display
+from Buttons import *  # Button controls from GPIO pins
+from Clock import *  # Time functions for the display
+from Player import *  # MP3 player functions
+from Weather import *  # Weather functions
 
 
 def getParameters():

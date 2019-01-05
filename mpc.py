@@ -36,13 +36,13 @@ def stop():
     call('mpc -q stop', shell=True)
 
 
-def next():
+def fwd():
     """ Moves to the next song/station in the playlist
     """
     call('mpc -q next', shell=True)
 
 
-def prev():
+def rew():
     """ Moves to the previous song/station in the playlist
     """
     call('mpc -q prev', shell=True)

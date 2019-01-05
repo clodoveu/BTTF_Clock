@@ -55,7 +55,7 @@ def Pause():
     """ Toggles Play and Pause
     """
     global MP3_pause_state
-    if MP3_pause_state == True:
+    if MP3_pause_state:
         MP3_pause_state = False
         mpc.pause()
     else:
@@ -67,14 +67,14 @@ def Next():
     """ Moves to the next song in the playlist
         or to the next radio station
     """
-    mpc.next()
+    mpc.fwd()
 
 
 def Previous():
     """ Goes back to the previous song
         or to the previous radio station
     """
-    mpc.prev()
+    mpc.rew()
 
 
 def initMP3():
