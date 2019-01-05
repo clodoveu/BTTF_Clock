@@ -8,7 +8,7 @@ CADJ - 2019-01-03
 1. Hardware Modules
 
 - Raspberry Pi Zero W
-https://www.amazon.com/gp/product/B0748MPQT4/ref=ppx_od_b_detailpages01?ie=UTF8&psc=1
+(https://www.amazon.com/gp/product/B0748MPQT4/ref=ppx_od_b_detailpages01?ie=UTF8&psc=1)
 $26.99
 * includes a Raspberry Pi power source, 5V 2.5A, double pin header, heatsink
 * not used: case, micro USB OTG, mini HDMI to HDMI adapter
@@ -17,15 +17,15 @@ $26.99
 about $7
 
 - Adafruit I2S 3W Stereo Speaker Bonnet for Raspberry Pi
-https://www.amazon.com/gp/product/B01MXYBVKZ/ref=ppx_od_b_detailpages06?ie=UTF8&psc=1
+(https://www.amazon.com/gp/product/B01MXYBVKZ/ref=ppx_od_b_detailpages06?ie=UTF8&psc=1)
 $13.89
 
 - CQRobot Arduino Speaker 3 Watt 8 Ohms
-https://www.amazon.com/gp/product/B0738NLFTG/ref=oh_aui_detailpage_o00_s01?ie=UTF8&psc=1
+(https://www.amazon.com/gp/product/B0738NLFTG/ref=oh_aui_detailpage_o00_s01?ie=UTF8&psc=1)
 $7.87
 
 - 4 x Quad alphanumeric display, red 0.54" digits, with I2C backpack
-https://www.amazon.com/gp/product/B00L2X4JEW/ref=ppx_od_b_detailpages01?ie=UTF8&psc=1
+(https://www.amazon.com/gp/product/B00L2X4JEW/ref=ppx_od_b_detailpages01?ie=UTF8&psc=1)
 $15.57 each
 
 Additional hardware (total cost about $6):
@@ -33,7 +33,7 @@ Additional hardware (total cost about $6):
 - single 20-pin header
 - buzzer
 - wiring
-- a corner off a small prototype printed circuit board
+- a corner cut from a small prototype printed circuit board
 
 Case, which I designed and built using MDF and lucite.
 
@@ -126,10 +126,10 @@ connection_timeout	"2000000"
 * Python libraries and modules:
 
 Installed:
-gpiozero        > https://gpiozero.readthedocs.io/en/stable/index.html#
-unidecode       > https://pypi.org/project/Unidecode/
-xmltodict       > https://pypi.org/project/xmltodict/
-icu             > https://pypi.org/project/PyICU/
+[gpiozero](https://gpiozero.readthedocs.io/en/stable/index.html#)
+[unidecode](https://pypi.org/project/Unidecode/)
+[xmltodict](https://pypi.org/project/xmltodict/)
+[icu](https://pypi.org/project/PyICU/)
 
 Built-in:
 urllib
