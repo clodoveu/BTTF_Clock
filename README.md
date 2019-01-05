@@ -38,7 +38,7 @@ Additional hardware (total cost about $6):
 Case, which I designed and built using MDF and lucite.
 
 
-#2. Connections
+# 2. Connections
 
 Stereo speaker bonnet connects directly to the Pi zero's GPIO. I soldered a header to the bonnet's top
 so that most GPIO pins remained accessible. I also soldered headers to the triple 3-pin power and ground connections
@@ -58,7 +58,7 @@ Buttons were then connected to the available GPIO pins: 12 (B0),21 (B1), 22 (B2)
 I also connected a buzzer to pin 13, and used pin 16 to connect a shutdown pushbutton.
 
 
-#3. Software components
+# 3. Software components
 
 I installed a vanilla Raspbian in the SD card, and opted to leave the full graphic interface there.
 It was not necessary, and I could have opted for a headless installation, but there is enough space in the SD card
@@ -68,14 +68,14 @@ From the basic installation, activate SSH and GPIO, and also maybe VNC.
 
 All the software was written in Python 3.
 
-###Python installation:
+### Python installation:
 
 ```
 sudo apt-get update
 sudo apt-get install build-essential python-dev python-smbus python-imaging git
 ```
 
-###Adafruit display driver
+### Adafruit display driver
 See https://learn.adafruit.com/led-backpack-displays-on-raspberry-pi-and-beaglebone-black/overview 
 
 ```
@@ -84,7 +84,7 @@ cd Adafruit_Python_LED_Backpack
 sudo python setup.py install
 ```
 
-###Stereo speaker bonnet
+### Stereo speaker bonnet
 See https://learn.adafruit.com/adafruit-speaker-bonnet-for-raspberry-pi/raspberry-pi-usage
 
 ```
@@ -95,7 +95,7 @@ https://raw.githubusercontent.com/adafruit/Raspberry-Pi-Installer-Scripts/master
 I took the additional step of activating the aplay script, but aplay caused all sorts of problems for me,
 and I ended up removing it.
 
-###MPD / MPC
+### MPD / MPC
 The project uses MPD (Music Player Daemos) and MPC (Music Player Client), which run at the operating system level.
 Controls are simple calls to MPC with the appropriate command-line attribute using the call function of the
 processing Python module.
@@ -132,7 +132,7 @@ audio_output {
 connection_timeout	"2000000"
 ```
 
-###Python libraries and modules:
+### Python libraries and modules:
 
 - Installed:
   - [gpiozero](https://gpiozero.readthedocs.io/en/stable/index.html#)
@@ -151,7 +151,7 @@ connection_timeout	"2000000"
   - time
   - re
 
-#4. Configuration
+# 4. Configuration
 
 A configuration file (.BTTF_Clock) should be found in the application's folder.
 First lines starting with # will be ignored. The first line of the file must be kept, as it is read using CSV.
@@ -215,7 +215,7 @@ America/Denver;Denver;Canonical;-07:00;-06:00
 ...
 ```
 
-#5. Data directories
+# 5. Data directories
 
 Three directories are expected: one for music (MP3), one for radio stations, and one for alarm ringtones (also MP3).
 
@@ -234,16 +234,16 @@ http://158.69.38.194:9098/stream, Cinemix
 ...
 ```
 
-#6. Weather information
+# 6. Weather information
 
 I developed a module to get and print in the 16-digit alphanumeric display two types of weather information: current
 weather and 4-day forecasts. Both are for Brazil and come from CPTEC/INPE, See http://servicos.cptec.inpe.br/XML/
 
-#7. Initialization at boot
+# 7. Initialization at boot
 
 TBD
 
-#8. Operation
+# 8. Operation
 
 TBD
 
