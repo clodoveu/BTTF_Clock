@@ -103,6 +103,7 @@ See https://linux.die.net/man/5/mpd.conf for details
 In my setup, the relevant parts of the file are listed below. Notice that you need to create the .mpd folder and
 define a Music folder.
 
+```
 music_directory	        "/home/pi/Music"
 playlist_directory		"/home/pi/.mpd/playlists"
 db_file			        "/home/pi/.mpd/mpd.db"
@@ -120,14 +121,15 @@ audio_output {
 	mixer_control	"PCM"
 }
 connection_timeout	"2000000"
+```
 
 * Python libraries and modules:
 
 Installed:
-gpiozero        # https://gpiozero.readthedocs.io/en/stable/index.html#
-unidecode       # https://pypi.org/project/Unidecode/
-xmltodict       # https://pypi.org/project/xmltodict/
-icu             # https://pypi.org/project/PyICU/
+gpiozero        > https://gpiozero.readthedocs.io/en/stable/index.html#
+unidecode       > https://pypi.org/project/Unidecode/
+xmltodict       > https://pypi.org/project/xmltodict/
+icu             > https://pypi.org/project/PyICU/
 
 Built-in:
 urllib
@@ -145,6 +147,7 @@ re
 A configuration file (.BTTF_Clock) should be found in the application's folder.
 First lines starting with # will be ignored. The first line of the file must be kept, as it is read using CSV.
 
+```
 parameter,value
 # Comment
 # Deadline format: yyyy-mm-dd hh:mm
@@ -182,6 +185,7 @@ RadioList,radioStations.txt
 AlarmTone,2
 # Locale
 Locale,pt_BR
+```
 
 A list of valid time zones for the World Clock should be found in the application's folder.
 First lines starting with # will be ignored.
@@ -189,6 +193,7 @@ The first attribute is the official time zone name, and shouldn't be changed. Th
 be displayed in the clock. The other attributes indicate whether the time zone is current (canonical),
 an alias or deprecated, and the time differences to UTC in normal times and in daylight savings time
 
+```
 # Sample
 America/Sao_Paulo;Brasilia;Canonical;-03:00;-02:00
 America/Bahia;Bahia;Canonical;-03:00;-03:00
@@ -199,6 +204,7 @@ America/New_York;New York;Canonical;-05:00;-04:00
 America/Chicago;Chicago;Canonical;-06:00;-05:00
 America/Denver;Denver;Canonical;-07:00;-06:00
 ...
+```
 
 5. Data directories
 
@@ -207,6 +213,7 @@ Three directories are expected: one for music (MP3), one for radio stations, and
 In the radio stations folder, a file called radioStations.txt is expected. It should contain URLs of radio streaming
 services, one per line. After the comma, there is an optional description. Lines starting with # are ignored.
 
+``` 
 # Sample
 http://sky1.torontocast.com:9085/stream, Radio BlueMoon Toronto
 http://198.58.98.83:8258/stream, Classic Rock Florida HD
@@ -216,6 +223,7 @@ http://139.162.245.57:8256/stream, 80s Soundtracks Radio
 http://uk6.internet-radio.com:8175/stream, SPARKS.FM UK RADIO
 http://158.69.38.194:9098/stream, Cinemix
 ...
+```
 
 6. Weather information
 
