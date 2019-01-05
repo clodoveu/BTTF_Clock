@@ -102,7 +102,7 @@ def repeat(param=None):
     call('mpc -q repeat {}'.format(p), shell=True)
 
 
-def filter(f):
+def playlist_filter(f):
     """ Creates a filtered playlist using f as search string for mpc search
         Examples:  "artist Queen"
                    "title Stairway"

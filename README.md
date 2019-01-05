@@ -1,9 +1,11 @@
 # BTTF_Clock
 A Back to the Future clock, implemented in hardware and software using A Raspberry Pi Zero and Python code
+The project is inspired by https://www.instructables.com/id/A-Back-to-the-Future-Clock/ but with significant hardware
+and software differences.
 
 Back to the Future clock
 Documentation
-CADJ - 2019-01-03
+CADJ - 2019-01-05
 
 # 1. Hardware Modules
 

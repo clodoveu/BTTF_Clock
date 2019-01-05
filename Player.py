@@ -96,7 +96,7 @@ def init_MP3_playlist(mode=0):
             mpc.fill_playlist()  # create a playlist from all songs in the Music folder
         else:  # apply multi-clause globals.MP3_Filter
             for clause in re.split('\|', globals.MP3_Filter):  # split list of filters, vertical bar separator
-                mpc.filter(clause.strip())  # .filter function searches and adds, so the clauses are now conjunctive
+                mpc.playlist_filter(clause.strip())  # function searches and adds, so the clauses are now conjunctive
         mpc.shuffle()  # Shuffle playlist
     else:
         mpc.fill_radiolist()  # create a playlist from the radio stations file
