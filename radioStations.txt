@@ -1,0 +1,17 @@
+http://sky1.torontocast.com:9085/stream, Radio BlueMoon Toronto
+http://198.58.98.83:8258/stream, Classic Rock Florida HD
+http://uk7.internet-radio.com:8226/stream, Box UK Radio danceradiouk
+http://212.71.250.12:8040/stream, Merge 104.8 Oman
+http://139.162.245.57:8256/stream, 80s Soundtracks Radio
+http://uk6.internet-radio.com:8175/stream, SPARKS.FM UK RADIO
+http://158.69.38.194:9098/stream, Cinemix
+http://109.74.196.76:8060/stream, Davide of MIMIC Classics
+http://198.58.106.133:8321/stream, XRDS.fm Clarksdale Mississippi Blues
+http://uk3.internet-radio.com:8405/live, Majestic Jukebox Radio
+http://ice1.somafm.com/secretagent-128-mp3, SomaFM: Secret Agent
+http://ice1.somafm.com/spacestation-128-mp3, SomaFM: Space Station Soma
+http://ice1.somafm.com/u80s-128-mp3, SomaFM: Underground 80s
+http://38.107.243.190:80, Delicious Agony Progressive Rock Radio
+http://live-mp3-128.kexp.org, KEXP U Washington Seattle
+http://wfuv-onair.streamguys.org:80/onair-hi, WFUV Public Radio - Live Bronx NY
+https://www.wwoz.org/listen/hi, WWOZ New Orleans
