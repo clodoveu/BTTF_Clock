@@ -185,8 +185,7 @@ def BTTF_Clock():
         time.sleep(1)
 
 def setAlarm():
-    """ Sets an alarm and activates the AlarmClock thread
-
+    """ Sets an alarm time and activates the AlarmClock thread
     """
     # print Alarm in the display
     clear_display16()
@@ -202,7 +201,6 @@ def setAlarm():
     upper_limit = [60, 24, 12, 31]
     msg = ['Min  ', 'Hour ', 'Month', 'Day  ', 'Set  ']
 
-
     # get alarm time from the keys
     pos = 0
     print_str16("{4:5} {0:02}/{1:02} {2:02}{3:02}".format(alarm[3], alarm[2], alarm[1], alarm[0], msg[0]))
@@ -211,9 +209,9 @@ def setAlarm():
     CM = globals.ClockMode
     while pos < 4 and CM == globals.ClockMode:
         while (not globals.B[3].is_pressed) and (CM == globals.ClockMode):
-            if (globals.B[2].is_pressed):
+            if globals.B[2].is_pressed:
                 alarm[pos] -= 1
-            if (globals.B[4].is_pressed):
+            if globals.B[4].is_pressed:
                 alarm[pos] += 1
             if alarm[pos] < lower_limit[pos]:
                 alarm[pos] = upper_limit[pos] - 1 + lower_limit[pos]
@@ -387,7 +385,7 @@ def WorldClock():
             #time.sleep(0.2)
         time.sleep(0.2)
 
-def chess_clock():
+def ChessClock():
     """ A clock for playing chess
         Game time is set for both players, B[2] and B[4] move count up.down, B[3] when ready
         Press B[1] or B[5] to start a countdown, and alternate between players
