@@ -18,7 +18,6 @@ import threading
 
 # OS and low-level
 import time
-import sys
 
 # Physical display arrangement and addressing
 # d3   d2   d1   d0

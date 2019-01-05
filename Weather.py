@@ -12,15 +12,17 @@ import CPTEC
 from Display import *
 import globals
 import unidecode
+from mpc import *
 
-def current_weather(city = 'SBBH'):
-    """ Imprime no display16 o tempo atual segundo o CPTEC/INPE
-        Parametro city: codigo de aeroporto - default: SBBH, codigo do aeroporto de Belo Horizonte
+
+def current_weather(city='SBBH'):
+    """ Prints current weather to display16 according to CPTEC/INPE
+        Parameter city: CPTEC airport code - default: SBBH, Belo Horizonte's airport
     """
     clear_display16()
 
     try:
-        td = ScrollDisplayThread(unidecode.unidecode(CPTEC.cptec_current_weather('SBBH')), 16)
+        td = ScrollDisplayThread(unidecode.unidecode(CPTEC.cptec_current_weather(city)), 16)
         td.start()
         # signal.pause()
     except (KeyboardInterrupt, SystemExit):
@@ -35,10 +37,11 @@ def current_weather(city = 'SBBH'):
 
     td.stop = True  # end the scrolling display
 
-def weather_forecast(city = '222', days = 2):
-    """ Imprime no display16 o tempo atual segundo o CPTEC/INPE
-        Parametro city: codigo da cidade - default: 222', codigo de Belo Horizonte
-        Parametro days: numero de dias de previsao a apresentar, 1-4. Default: 2 dias
+
+def weather_forecast(city='222', days=2):
+    """ Displays current weather forecast according to CPTEC/INPE
+        Parameter city: city code - default: 222, for Belo Horizonte
+        Parameter days: number of forecast days to display, 1 to 4. Default: 2
     """
     clear_display16()
 
@@ -62,4 +65,3 @@ def weather_forecast(city = '222', days = 2):
         time.sleep(1)
 
     td.stop = True  # end the scrolling display
-

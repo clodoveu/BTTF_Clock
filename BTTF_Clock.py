@@ -31,7 +31,7 @@ from datetime import datetime
 from icu import ICUtzinfo
 
 # Project-specific modules
-import globals # Overall configurations and global variables
+import globals  # Overall configurations and global variables
 import mpc  # player commands
 from Display import *  ## Control of the 16-digit alphanumeric display
 from Buttons import *  ## Button controls from GPIO pins
@@ -46,7 +46,7 @@ def getParameters():
     print("Reading parameter file {}".format(globals.paramFile))
     try:
         with open(globals.paramFile, 'r') as f:
-            reader = csv.DictReader(filter(lambda row: row[0] != '#', f))
+            reader = csv.DictReader(filter(lambda line: line[0] != '#', f))
             for row in reader:
                 globals.parameters[row['parameter']] = row['value']
         if 'MP3_Source' in globals.parameters.keys():
@@ -108,25 +108,27 @@ def shutdown():
     clear_display16()
     print_str16('Shutdown? ')
     time.sleep(1)
-    while (not globals.B[3].is_pressed):
-        if (globals.B[5].is_pressed):
+    while not globals.B[3].is_pressed:
+        if globals.B[5].is_pressed:
             break
         time.sleep(0.2)
     clear_display16()
-    call('sudo shutdown +1', shell = True)
+    call('sudo shutdown +1', shell=True)
     sys.exit()
+
 
 class ControlThread(threading.Thread):
     """ Key control thread
         For special button uses, global in relation to clock modes
     """
+
     def __init__(self):
         threading.Thread.__init__(self)
         print("Initializing control thread...")
 
     def run(self):
         while globals.running.is_set():
-            if globals.B[2].is_pressed and globals.B[4].is_pressed: # reload parameters file
+            if globals.B[2].is_pressed and globals.B[4].is_pressed:  # reload parameters file
                 print("Reloading...")
                 mpc.stop()
                 mpc.clear()
@@ -144,10 +146,10 @@ class ControlThread(threading.Thread):
                 time.sleep(1)
                 print("Done reloading.")
 
-            if globals.B[1].is_pressed and globals.B[5].is_pressed: # exit system
+            if globals.B[1].is_pressed and globals.B[5].is_pressed:  # exit system
                 if globals.ClockMode == 1:
                     clear_display16()
-                    #time.sleep(0.5)
+                    # time.sleep(0.5)
                     CM = globals.ClockMode
                     d0 = datetime.now()
                     while not globals.B[3].is_pressed and CM == globals.ClockMode:
@@ -156,7 +158,7 @@ class ControlThread(threading.Thread):
                         time.sleep(0.5)
                         dt = datetime.now() - d0
                         if dt.total_seconds() > 5:
-                           break
+                            break
                         if globals.B[3].is_pressed:
                             globals.running.clear()
                             clear_display16()
@@ -164,36 +166,37 @@ class ControlThread(threading.Thread):
                             sys.exit()
             time.sleep(0.2)
 
+
 class DisplayThread(threading.Thread):
     """ Display handling thread
-        Calls the functions for each clock mode in turn, based on the global ClocKMode variable
+        Calls the functions for each clock mode in turn, based on the global ClockMode variable
     """
+
     def __init__(self):
         threading.Thread.__init__(self)
         print("Initializing display thread, ClockMode = {}...".format(globals.ClockMode))
 
     def run(self):
         while globals.running.is_set():
-            if (globals.ClockMode == 1):
+            if globals.ClockMode == 1:
                 try:
                     BTTF_Clock()
                 except (KeyboardInterrupt, SystemExit):
-                    print("BTTF except")
                     clear_display16()
                     cleanupButtons()
                     globals.running.clear()
                     sys.exit()
-            elif (globals.ClockMode == 2):
+            elif globals.ClockMode == 2:
                 current_weather('SBBH')
-            elif (globals.ClockMode == 3):
-                weather_forecast('222',4)
-            elif (globals.ClockMode == 4):
+            elif globals.ClockMode == 3:
+                weather_forecast('222', 4)
+            elif globals.ClockMode == 4:
                 TimeSinceDate(globals.FromDate)
-            elif (globals.ClockMode == 5):
+            elif globals.ClockMode == 5:
                 TimeToDeadline(globals.Deadline)
-            elif (globals.ClockMode == 6):
+            elif globals.ClockMode == 6:
                 WorldClock()
-            elif (globals.ClockMode == 7):
+            elif globals.ClockMode == 7:
                 initMP3()
                 init_MP3_playlist()
                 try:
@@ -205,7 +208,7 @@ class DisplayThread(threading.Thread):
                     clear_display16()
                     globals.running.clear()
                     sys.exit()
-            elif (globals.ClockMode == 8):
+            elif globals.ClockMode == 8:
                 initMP3()
                 init_MP3_playlist(1)
                 try:
@@ -217,23 +220,25 @@ class DisplayThread(threading.Thread):
                     clear_display16()
                     globals.running.clear()
                     sys.exit()
-            elif (globals.ClockMode == 9):
+            elif globals.ClockMode == 9:
                 Clock()
-            elif (globals.ClockMode == 10):
+            elif globals.ClockMode == 10:
                 Now_Milliseconds()
-            elif (globals.ClockMode == 11):
-                Chrono()
-            elif (globals.ClockMode == 12):
-                Chrono(1)  # LongChrono
-            elif (globals.ClockMode == 13):
+            elif globals.ClockMode == 11:
+                Chrono()    # milliseconds chronometer
+            elif globals.ClockMode == 12:
+                Chrono(1)   # seconds chronometer
+            elif globals.ClockMode == 13:
                 setAlarm()
-            elif (globals.ClockMode == 14):
+            elif globals.ClockMode == 14:
                 Timer()
             else:
                 globals.ClockMode = 1
             time.sleep(0.01)
 
+
 button_hold_time = datetime.now()
+
 
 def button_held():
     """ Callback for when the MODE button is held -- action will take place when it is released
@@ -241,7 +246,8 @@ def button_held():
     global button_hold_time
     # gets the time for the button press
     button_hold_time = datetime.now()
-    #print("Hold: {}".format(button_hold_time))
+    # print("Hold: {}".format(button_hold_time))
+
 
 def change_mode():
     """ Change to the default clock mode with a long press
@@ -249,18 +255,19 @@ def change_mode():
     """
     global button_hold_time
 
-    br = datetime.now() # time for button release
-    #print("Release: {}".format(br))
-    td = br - button_hold_time # timedelta object
-    active_time = td.total_seconds() # seconds pressed, float
+    br = datetime.now()  # time for button release
+    # print("Release: {}".format(br))
+    td = br - button_hold_time  # timedelta object
+    active_time = td.total_seconds()  # seconds pressed, float
 
     if active_time > 2.0:
-        #print("Long press: {}".format(active_time))
+        # print("Long press: {}".format(active_time))
         globals.ClockMode = globals.DefaultClockMode
     elif active_time < 0.2:
-        #print("Short press: {}".format(active_time))
+        # print("Short press: {}".format(active_time))
         globals.ClockMode += 1
     print("ClockMode: {}".format(globals.ClockMode))
+
 
 def main():
     # initialization
@@ -282,7 +289,7 @@ def main():
         tc = ControlThread()
         tc.start()
         print("Running...")
-        #signal.pause()
+        # signal.pause()
     except (KeyboardInterrupt, SystemExit):
         globals.running.clear()
         t1.join()
@@ -292,14 +299,13 @@ def main():
         mpc.stop()
         mpc.clear()
         sys.exit()
-    #finally:
+    # finally:
     #    cleanupButtons()
     #    clear_display16()
 
-    #while True:
+    # while True:
     #    pass
+
 
 if __name__ == '__main__':
     main()
-
-

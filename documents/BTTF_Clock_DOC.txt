@@ -86,7 +86,7 @@ I took the additional step of activating the aplay script, but aplay caused all 
 and I ended up removing it.
 
 * MPD / MPC
-The project uses MPD (Music Player Daemos) and MPC (Music Player Client), which run at the operating system level.
+The project uses MPD (Music Player Daemon) and MPC (Music Player Client), which run at the operating system level.
 Controls are simple calls to MPC with the appropriate command-line attribute using the call function of the
 processing Python module.
 
