@@ -5,13 +5,13 @@ Back to the Future clock
 Documentation
 CADJ - 2019-01-03
 
-1. Hardware Modules
+# 1. Hardware Modules
 
 - Raspberry Pi Zero W
 (https://www.amazon.com/gp/product/B0748MPQT4/ref=ppx_od_b_detailpages01?ie=UTF8&psc=1)
 $26.99
-* includes a Raspberry Pi power source, 5V 2.5A, double pin header, heatsink
-* not used: case, micro USB OTG, mini HDMI to HDMI adapter
+  * includes a Raspberry Pi power source, 5V 2.5A, double pin header, heatsink
+  * not used: case, micro USB OTG, mini HDMI to HDMI adapter
 
 - 16 GB microSD card
 about $7
@@ -38,7 +38,7 @@ Additional hardware (total cost about $6):
 Case, which I designed and built using MDF and lucite.
 
 
-2. Connections
+#2. Connections
 
 Stereo speaker bonnet connects directly to the Pi zero's GPIO. I soldered a header to the bonnet's top
 so that most GPIO pins remained accessible. I also soldered headers to the triple 3-pin power and ground connections
@@ -51,14 +51,14 @@ in which I soldered five sets of five header pins, corresponding to V+ (power), 
 and SDA and SCL ports. One header was connected to each display, and the fifth to pins 1 (3.3V)
 (twice, using the bonnet's header), 3, 5 and 6.
 
-The stereo speaker bonnet uses up GPIO pins 18, 19 and 21, so those are unavailable for other connections.
+The stereo speaker bonnet uses GPIO pins 18, 19 and 21, so those are unavailable for other connections.
 
 Buttons were then connected to the available GPIO pins: 12 (B0),21 (B1), 22 (B2), 23 (B3), 24 (B4), 27 (B5).
 
-I also connected the buzzer to pin 13, and used pin 16 to connect a shutdown switch.
+I also connected a buzzer to pin 13, and used pin 16 to connect a shutdown pushbutton.
 
 
-3. Software components
+#3. Software components
 
 I installed a vanilla Raspbian in the SD card, and opted to leave the full graphic interface there.
 It was not necessary, and I could have opted for a headless installation, but there is enough space in the SD card
@@ -68,32 +68,41 @@ From the basic installation, activate SSH and GPIO, and also maybe VNC.
 
 All the software was written in Python 3.
 
-* Python installation:
+###Python installation:
+
+```
 sudo apt-get update
 sudo apt-get install build-essential python-dev python-smbus python-imaging git
+```
 
-* Adafruit display driver
-See https://learn.adafruit.com/led-backpack-displays-on-raspberry-pi-and-beaglebone-black/overview
+###Adafruit display driver
+See https://learn.adafruit.com/led-backpack-displays-on-raspberry-pi-and-beaglebone-black/overview 
 
+```
 git clone https://github.com/adafruit/Adafruit_Python_LED_Backpack.git
 cd Adafruit_Python_LED_Backpack
 sudo python setup.py install
+```
 
-* Stereo speaker bonnet
+###Stereo speaker bonnet
 See https://learn.adafruit.com/adafruit-speaker-bonnet-for-raspberry-pi/raspberry-pi-usage
 
+```
 curl -sS
 https://raw.githubusercontent.com/adafruit/Raspberry-Pi-Installer-Scripts/master/i2samp.sh | bash
+```
 
 I took the additional step of activating the aplay script, but aplay caused all sorts of problems for me,
 and I ended up removing it.
 
-* MPD / MPC
+###MPD / MPC
 The project uses MPD (Music Player Daemos) and MPC (Music Player Client), which run at the operating system level.
 Controls are simple calls to MPC with the appropriate command-line attribute using the call function of the
 processing Python module.
 
+```
 sudo apt-get install mpd mpc
+```
 
 MPC commands (see man page): https://www.mankier.com/1/mpc
 
@@ -123,26 +132,26 @@ audio_output {
 connection_timeout	"2000000"
 ```
 
-* Python libraries and modules:
+###Python libraries and modules:
 
-Installed:
-[gpiozero](https://gpiozero.readthedocs.io/en/stable/index.html#)
-[unidecode](https://pypi.org/project/Unidecode/)
-[xmltodict](https://pypi.org/project/xmltodict/)
-[icu](https://pypi.org/project/PyICU/)
+- Installed:
+  - [gpiozero](https://gpiozero.readthedocs.io/en/stable/index.html#)
+  - [unidecode](https://pypi.org/project/Unidecode/)
+  - [xmltodict](https://pypi.org/project/xmltodict/)
+  - [icu](https://pypi.org/project/PyICU/)
 
-Built-in:
-urllib
-threading
-subprocess
-signal
-sys
-csv
-datetime
-time
-re
+- Built-in:
+  - urllib
+  - threading
+  - subprocess
+  - signal
+  - sys
+  - csv
+  - datetime
+  - time
+  - re
 
-4. Configuration
+#4. Configuration
 
 A configuration file (.BTTF_Clock) should be found in the application's folder.
 First lines starting with # will be ignored. The first line of the file must be kept, as it is read using CSV.
@@ -206,7 +215,7 @@ America/Denver;Denver;Canonical;-07:00;-06:00
 ...
 ```
 
-5. Data directories
+#5. Data directories
 
 Three directories are expected: one for music (MP3), one for radio stations, and one for alarm ringtones (also MP3).
 
@@ -225,16 +234,16 @@ http://158.69.38.194:9098/stream, Cinemix
 ...
 ```
 
-6. Weather information
+#6. Weather information
 
 I developed a module to get and print in the 16-digit alphanumeric display two types of weather information: current
 weather and 4-day forecasts. Both are for Brazil and come from CPTEC/INPE, See http://servicos.cptec.inpe.br/XML/
 
-7. Initialization at boot
+#7. Initialization at boot
 
 TBD
 
-8. Operation
+#8. Operation
 
 TBD
 
