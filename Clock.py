@@ -423,7 +423,27 @@ def ChessClock():
     #
     tw = timedelta(seconds=1800)
     tb = timedelta(seconds=1800)
+
+    # Indicate sides
     white_left = False
+    while not globals.B[1].is_pressed and not globals.B[3].is_pressed and not globals.B[5].is_pressed and CM == globals.ClockMode:
+        if globals.B[1].is_pressed or globals_B[5] is_pressed:
+            white_left = not white_left
+        if white_left:
+            print_str16("Whites  Blacks")
+        else:
+            print_str16("Blacks  Whites")
+        write_display16()
+        time.sleep(0.2)
+
+    if white_left:
+        white_button = 1
+        black_button = 5
+    else:
+        white_button = 5
+        black_button = 1
+
+    '''
     if white_left:
         msg = "{:>6} WB {:>6}".format(td_format_seconds_6(tw), td_format_seconds_6(tb))
     else:
@@ -432,6 +452,7 @@ def ChessClock():
     set_decimal_point16(4)
     set_decimal_point16(13)
     write_display16()
+    '''
 
     # wait for GO
     CM = globals.ClockMode
@@ -452,7 +473,7 @@ def ChessClock():
     while not finish and CM == globals.ClockMode:
 
         t0 = datetime.now()
-        while not globals.B[1].is_pressed and CM == globals.ClockMode:  # Whites clock running
+        while not globals.B[white_button].is_pressed and CM == globals.ClockMode:  # Whites clock running
             t1 = datetime.now()
             dt = t1 - t0
             if tw - dt <= zero:
@@ -471,7 +492,7 @@ def ChessClock():
 
         if not finish:
             t0 = datetime.now()
-            while not globals.B[5].is_pressed and CM == globals.ClockMode:  # Blacks clock running
+            while not globals.B[black_button].is_pressed and CM == globals.ClockMode:  # Blacks clock running
                 t1 = datetime.now()
                 dt = t1 - t0
                 if tb - dt <= zero:
