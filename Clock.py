@@ -68,11 +68,9 @@ def td_format_seconds_6(td_object):
     hours, minutes = divmod(minutes, 60)
 
     msg = ''
-    Flag = False
     if hours != 0:
-        Flag = True
         msg += '{0:1d}h'.format(hours)
-    if hours > 0 or Flag:
+    if hours > 0:
         msg += '{0:02d}{1:02d}'.format(minutes, seconds)
     else:
         msg += "{0:2d}{1:02d}".format(minutes, seconds)
@@ -457,7 +455,7 @@ def ChessClock():
         #dt = timedelta(seconds=0)
         while not globals.B[1].is_pressed and CM == globals.ClockMode:  # Whites clock running
             t1 = datetime.now()
-            dt = t0 - t1
+            dt = t1 - t0
             if tw - dt <= zero:
                 finish = True
                 # beep?
@@ -477,7 +475,7 @@ def ChessClock():
             #dt = timedelta(seconds=0)
             while not globals.B[5].is_pressed and CM == globals.ClockMode:  # Blacks clock running
                 t1 = datetime.now()
-                dt = t0 - t1
+                dt = t1 - t0
                 if tb - dt <= zero:
                     finish = True
                     # beep?
