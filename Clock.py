@@ -33,8 +33,8 @@ def td_format_seconds(td_object):
     """ Formats a 14-digit string from a timedelta object
         Years -> seconds
         Returns 99Y999d99h99.99
-        Blanks are used for the larger units when they are zeroes
-        Example: ____14d18h30.01
+        Spaces to the left are not included, so the return value is of variable size
+        Example: 14d18h30.01
     """
     seconds = int(td_object.total_seconds())
     minutes, seconds = divmod(seconds, 60)
@@ -58,6 +58,26 @@ def td_format_seconds(td_object):
 
     return msg
 
+def td_format_seconds_6(td_object):
+    """ Formats a 6-digit string from a timedelta object
+        Hours -> seconds; input must be < 10h
+        Returns 9h99.99
+    """
+    seconds = int(td_object.total_seconds())
+    minutes, seconds = divmod(seconds, 60)
+    hours, minutes = divmod(minutes, 60)
+
+    msg = ''
+    Flag = False
+    if hours != 0:
+        Flag = True
+        msg += '{0:1d}h'.format(hours)
+    if hours > 0 or Flag:
+        msg += '{0:02d}{1:02d}'.format(minutes, seconds)
+    else:
+        msg += "{0:2d}{1:02d}".format(minutes, seconds)
+
+    return msg
 
 def td_format_milliseconds(td_object):
     """ Formats a 16-digit string from a timedelta object
@@ -407,9 +427,9 @@ def ChessClock():
     tb = timedelta(seconds=7200)
     white_left = True
     if white_left:
-        msg = "{:>6} WB {:>6}".format(td_format_seconds(tw), td_format_seconds(tb))
+        msg = "{:>6} WB {:>6}".format(td_format_seconds_6(tw), td_format_seconds_6(tb))
     else:
-        msg = "{:>6} BW {:>6}".format(td_format_seconds(tb), td_format_seconds(tw))
+        msg = "{:>6} BW {:>6}".format(td_format_seconds_6(tb), td_format_seconds_6(tw))
     set_decimal_point16(4)
     set_decimal_point16(13)
     print_str16(msg)
@@ -418,9 +438,9 @@ def ChessClock():
     # wait for GO
     CM = globals.ClockMode
     if white_left:
-        msg = "{:>6} GO {:>6}".format(td_format_seconds(tw), td_format_seconds(tb))
+        msg = "{:>6} GO {:>6}".format(td_format_seconds_6(tw), td_format_seconds_6(tb))
     else:
-        msg = "{:>6} GO {:>6}".format(td_format_seconds(tb), td_format_seconds(tw))
+        msg = "{:>6} GO {:>6}".format(td_format_seconds_6(tb), td_format_seconds_6(tw))
     set_decimal_point16(3)
     set_decimal_point16(13)
     print_str16(msg)
@@ -432,14 +452,6 @@ def ChessClock():
     zero = timedelta(seconds=0)
     finish = False
     while not finish and CM == globals.ClockMode:
-        if white_left:
-            msg = "{:>6} WB {:>6}".format(td_format_seconds(tw), td_format_seconds(tb))
-        else:
-            msg = "{:>6} BW {:>6}".format(td_format_seconds(tb), td_format_seconds(tw))
-        print_str16(msg)
-        set_decimal_point16(3)
-        set_decimal_point16(13)
-        write_display16()
 
         t0 = datetime.now() + timedelta(microseconds=tw * 1000000)
         dt = datetime.timedelta(seconds=0)
@@ -450,9 +462,9 @@ def ChessClock():
                 finish = True
                 # beep?
             if white_left:
-                msg = "{:>6} WB {:>6}".format(td_format_seconds(tw-dt), td_format_seconds(tb))
+                msg = "{:>6} WB {:>6}".format(td_format_seconds_6(tw-dt), td_format_seconds_6(tb))
             else:
-                msg = "{:>6} BW {:>6}".format(td_format_seconds(tb), td_format_seconds(tw-dt))
+                msg = "{:>6} BW {:>6}".format(td_format_seconds_6(tb), td_format_seconds_6(tw-dt))
             set_decimal_point16(3)
             set_decimal_point16(13)
             print_str16(msg)
@@ -469,9 +481,9 @@ def ChessClock():
                     finish = True
                     # beep?
                 if white_left:
-                    msg = "{:>6} WB {:>6}".format(td_format_seconds(tw), td_format_seconds(tb-dt))
+                    msg = "{:>6} WB {:>6}".format(td_format_seconds_6(tw), td_format_seconds_6(tb-dt))
                 else:
-                    msg = "{:>6} BW {:>6}".format(td_format_seconds(tb-dt), td_format_seconds(tw))
+                    msg = "{:>6} BW {:>6}".format(td_format_seconds_6(tb-dt), td_format_seconds_6(tw))
                 set_decimal_point16(3)
                 set_decimal_point16(13)
                 print_str16(msg)
