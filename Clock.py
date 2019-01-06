@@ -454,7 +454,7 @@ def ChessClock():
     while not finish and CM == globals.ClockMode:
 
         t0 = datetime.now() + timedelta(microseconds=tw.total_seconds() * 1000000)
-        dt = datetime.timedelta(seconds=0)
+        #dt = timedelta(seconds=0)
         while not globals.B[1].is_pressed and CM == globals.ClockMode:  # Whites clock running
             t1 = datetime.now()
             dt = t0 - t1
@@ -474,7 +474,7 @@ def ChessClock():
 
         if not finish:
             t0 = datetime.now() + timedelta(microseconds=tb.total_seconds() * 1000000)
-            dt = datetime.timedelta(seconds=0)
+            #dt = timedelta(seconds=0)
             while not globals.B[5].is_pressed and CM == globals.ClockMode:  # Blacks clock running
                 t1 = datetime.now()
                 dt = t0 - t1
