@@ -43,7 +43,7 @@ def td_format_seconds(td_object):
     years, days = divmod(days, 365)
 
     msg = ''
-    flag = False
+    Flag = False
     if years != 0:
         msg = '{0:2d}Y'.format(years)
         Flag = True
