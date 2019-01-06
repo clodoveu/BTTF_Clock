@@ -155,3 +155,8 @@ def fill_radiolist():
     except EnvironmentError:
         print("Radio stations file not found")
         add('http://sky1.torontocast.com:9085/stream')  # insert just one and hope
+
+def update():
+    """ Update the database, to be run whenever the contents have changed
+    """
+    call('mpc update', shell=True)

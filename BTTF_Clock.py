@@ -73,6 +73,10 @@ def getParameters():
             globals.AlarmTone = int(globals.parameters['AlarmTone'])
         if 'Locale' in globals.parameters.keys():
             globals.Locale = globals.parameters['Locale']
+        if 'CityCode' in globals.parameters.keys():
+            globals.CityCode = globals.parameters['CityCode']
+        if 'AirportCode'in globals.parameters.keys():
+            globals.AirportCode = globals.parameters['AirportCode']
     except EnvironmentError:
         print("Parameters file not found, keeping defaults")
 
@@ -88,6 +92,8 @@ def getParameters():
     print('RadioList: {}'.format(globals.RadioList))
     print('AlarmTone: {}'.format(globals.AlarmTone))
     print('Locale: {}'.format(globals.Locale))
+    print('CityCode: {}'.format(globals.CityCode))
+    print('AirportCode: {}'.format(globals.AirportCode))
 
     print("Reading timezones file {}".format(globals.timezonesFile))
     try:
@@ -99,6 +105,9 @@ def getParameters():
         print("Timezones file not found, keeping only the local timezone")
         defaultTZ = ICUtzinfo.getDefault()
         globals.TimeZones.append(str(defaultTZ))
+
+    print("Updating music database")
+    mpc.update()
 
 
 def shutdown():
@@ -187,9 +196,9 @@ class DisplayThread(threading.Thread):
                     globals.running.clear()
                     sys.exit()
             elif globals.ClockMode == 2:
-                current_weather('SBBH')
+                current_weather(globals.AirportCode)
             elif globals.ClockMode == 3:
-                weather_forecast('222', 4)
+                weather_forecast(globals.CityCode, 4)
             elif globals.ClockMode == 4:
                 TimeSinceDate(globals.FromDate)
             elif globals.ClockMode == 5:

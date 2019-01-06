@@ -27,6 +27,8 @@ RingtonesSource = '/home/pi/Ringtones/'  # Directory for alarm ringtones
 MP3_Filter = ''                 # Filter for MP3 files to include in the playlist
 AlarmTone = 0                   # Default alarm sound: 0 = buzzer, 1 and above take the nth item in the Ringtones list
 Locale = "pt-BR"                # Future use
+CityCode = "222"                # City code according to CPTEC/INPE, BH = 222
+AirportCode = "SBBH"            # Airport code according to CPTEC/INPE, BH = SBBH
 
 TimeZones = []  # list of time zones
 timezonesFile = ".BTTF_timezones"
