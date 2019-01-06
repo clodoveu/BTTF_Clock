@@ -421,8 +421,8 @@ def ChessClock():
     #     stop player 2 timer
     # blink when timer gets to zero
     #
-    tw = timedelta(seconds=3660)
-    tb = timedelta(seconds=4000)
+    tw = timedelta(seconds=1800)
+    tb = timedelta(seconds=1800)
     white_left = False
     if white_left:
         msg = "{:>6} WB {:>6}".format(td_format_seconds_6(tw), td_format_seconds_6(tb))
