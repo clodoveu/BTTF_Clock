@@ -467,14 +467,14 @@ def ChessClock():
             if count[pos] >= upper_limit[pos]:
                 count[pos] = lower_limit[pos]
             print_str16("{3:10}{0:1}h{1:02}{2:02}".format(count[2], count[1], count[0], msg[pos]))
-            set_decimal_point16(12)
+            set_decimal_point16(13)
             write_display16()
             time.sleep(0.2)
         time.sleep(0.2)
         pos += 1
         if CM == globals.ClockMode:  # timer set: display
             print_str16("{3:10}{0:1}h{1:02}{2:02}".format(count[2], count[1], count[0], msg[pos]))
-            set_decimal_point16(12)
+            set_decimal_point16(13)
             write_display16()
             time.sleep(1)
 
@@ -500,14 +500,14 @@ def ChessClock():
             if count[pos] >= upper_limit[pos]:
                 count[pos] = lower_limit[pos]
             print_str16("{3:10}{0:1}h{1:02}{2:02}".format(count[2], count[1], count[0], msg[pos]))
-            set_decimal_point16(12)
+            set_decimal_point16(13)
             write_display16()
             time.sleep(0.2)
         time.sleep(0.2)
         pos += 1
         if CM == globals.ClockMode:  # timer set: display
             print_str16("{3:10}{0:1}h{1:02}{2:02}".format(count[2], count[1], count[0], msg[pos]))
-            set_decimal_point16(12)
+            set_decimal_point16(13)
             write_display16()
             time.sleep(1)
 
