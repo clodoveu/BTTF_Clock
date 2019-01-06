@@ -453,7 +453,7 @@ def ChessClock():
     finish = False
     while not finish and CM == globals.ClockMode:
 
-        t0 = datetime.now() + timedelta(microseconds=tw * 1000000)
+        t0 = datetime.now() + timedelta(microseconds=tw.total_seconds() * 1000000)
         dt = datetime.timedelta(seconds=0)
         while not globals.B[1].is_pressed and CM == globals.ClockMode:  # Whites clock running
             t1 = datetime.now()
@@ -469,10 +469,11 @@ def ChessClock():
             set_decimal_point16(13)
             print_str16(msg)
             write_display16()
+            time.sleep(0.2)
         tw -= dt
 
         if not finish:
-            t0 = datetime.now() + timedelta(microseconds=tb * 1000000)
+            t0 = datetime.now() + timedelta(microseconds=tb.total_seconds() * 1000000)
             dt = datetime.timedelta(seconds=0)
             while not globals.B[5].is_pressed and CM == globals.ClockMode:  # Blacks clock running
                 t1 = datetime.now()
@@ -488,6 +489,7 @@ def ChessClock():
                 set_decimal_point16(13)
                 print_str16(msg)
                 write_display16()
+                time.sleep(0.2)
             tb -= dt
 
 
