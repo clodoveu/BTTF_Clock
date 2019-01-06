@@ -426,6 +426,7 @@ def ChessClock():
 
     # Indicate sides
     white_left = False
+    CM = globals.ClockMode
     while not globals.B[1].is_pressed and not globals.B[3].is_pressed and not globals.B[5].is_pressed and CM == globals.ClockMode:
         if globals.B[1].is_pressed or globals_B[5].is_pressed:
             white_left = not white_left
@@ -455,7 +456,6 @@ def ChessClock():
     '''
 
     # wait for GO
-    CM = globals.ClockMode
     if white_left:
         msg = "{:>6} GO {:>6}".format(td_format_seconds_6(tw), td_format_seconds_6(tb))
     else:
