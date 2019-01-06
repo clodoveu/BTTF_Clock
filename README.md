@@ -196,6 +196,10 @@ RadioList,radioStations.txt
 AlarmTone,2
 # Locale
 Locale,pt_BR
+# CityCode, according to CPTEC/INPE, BH = 222
+CityCode,222
+# AirportCode, according to CPTEC/INPE, BH = SBBH
+AirportCode,SBBH
 ```
 
 A list of valid time zones for the World Clock should be found in the application's folder.
