@@ -423,7 +423,7 @@ def ChessClock():
     #
     tw = timedelta(seconds=3660)
     tb = timedelta(seconds=4000)
-    white_left = True
+    white_left = False
     if white_left:
         msg = "{:>6} WB {:>6}".format(td_format_seconds_6(tw), td_format_seconds_6(tb))
     else:
