@@ -43,20 +43,21 @@ def td_format_seconds(td_object):
     years, days = divmod(days, 365)
 
     msg = ''
-    Flag = False
+    flag = False
     if years != 0:
         msg = '{0:2d}Y'.format(years)
-        Flag = True
-    if days != 0 or Flag:
+        flag = True
+    if days != 0 or flag:
         msg += '{0:3d}d'.format(days)
-    if hours != 0 or Flag:
+    if hours != 0 or flag:
         msg += '{0:2d}h'.format(hours)
-    if hours > 0 or Flag:
+    if hours > 0 or flag:
         msg += '{0:02d}{1:02d}'.format(minutes, seconds)
     else:
         msg += "{0:2d}{1:02d}".format(minutes, seconds)
 
     return msg
+
 
 def td_format_seconds_6(td_object):
     """ Formats a 6-digit string from a timedelta object
@@ -76,6 +77,7 @@ def td_format_seconds_6(td_object):
         msg += "{0:2d}{1:02d}".format(minutes, seconds)
 
     return msg
+
 
 def td_format_milliseconds(td_object):
     """ Formats a 16-digit string from a timedelta object
@@ -422,7 +424,6 @@ def ChessClock():
     # blink when timer gets to zero
     #
 
-
     # Indicate sides
     white_left = True
     CM = globals.ClockMode
@@ -478,7 +479,7 @@ def ChessClock():
             write_display16()
             time.sleep(1)
 
-    tw = timedelta(seconds = count[0] + 60 * count[1] + 60 * 60 * count[2])  # seconds
+    tw = timedelta(seconds=count[0] + 60 * count[1] + 60 * 60 * count[2])  # seconds
 
     msg = ['Blacks s  ', 'Blacks m  ', 'Blacks h  ', 'Set       ']
     count = [0, 0, 0]  # sec, min, hour
@@ -511,7 +512,7 @@ def ChessClock():
             write_display16()
             time.sleep(1)
 
-    tb = timedelta(seconds = count[0] + 60 * count[1] + 60 * 60 * count[2])  # seconds
+    tb = timedelta(seconds=count[0] + 60 * count[1] + 60 * 60 * count[2])  # seconds
 
     '''
     if white_left:
@@ -543,16 +544,17 @@ def ChessClock():
     while not finish and CM == globals.ClockMode:
 
         t0 = datetime.now()
-        while not finish and not globals.B[white_button].is_pressed and CM == globals.ClockMode:  # Whites clock running
+        # Whites clock running
+        while not finish and not globals.B[white_button].is_pressed and CM == globals.ClockMode:
             t1 = datetime.now()
             dt = t1 - t0
             if tw - dt <= zero:
                 finish = True
                 globals.BUZZ.beep(0.1, 0.05, 5)
             if white_left:
-                msg = "{:>6} WB {:>6}".format(td_format_seconds_6(tw-dt), td_format_seconds_6(tb))
+                msg = "{:>6} WB {:>6}".format(td_format_seconds_6(tw - dt), td_format_seconds_6(tb))
             else:
-                msg = "{:>6} BW {:>6}".format(td_format_seconds_6(tb), td_format_seconds_6(tw-dt))
+                msg = "{:>6} BW {:>6}".format(td_format_seconds_6(tb), td_format_seconds_6(tw - dt))
             print_str16(msg)
             set_decimal_point16(3)
             set_decimal_point16(13)
@@ -562,16 +564,17 @@ def ChessClock():
 
         if not finish:
             t0 = datetime.now()
-            while not finish and not globals.B[black_button].is_pressed and CM == globals.ClockMode:  # Blacks clock running
+            # Blacks clock running
+            while not finish and not globals.B[black_button].is_pressed and CM == globals.ClockMode:
                 t1 = datetime.now()
                 dt = t1 - t0
                 if tb - dt <= zero:
                     finish = True
                     globals.BUZZ.beep(0.1, 0.05, 5)
                 if white_left:
-                    msg = "{:>6} WB {:>6}".format(td_format_seconds_6(tw), td_format_seconds_6(tb-dt))
+                    msg = "{:>6} WB {:>6}".format(td_format_seconds_6(tw), td_format_seconds_6(tb - dt))
                 else:
-                    msg = "{:>6} BW {:>6}".format(td_format_seconds_6(tb-dt), td_format_seconds_6(tw))
+                    msg = "{:>6} BW {:>6}".format(td_format_seconds_6(tb - dt), td_format_seconds_6(tw))
                 print_str16(msg)
                 set_decimal_point16(3)
                 set_decimal_point16(13)
@@ -579,11 +582,8 @@ def ChessClock():
                 time.sleep(0.2)
             tb -= dt
     if finish:
-        finish = False
         while not globals.B[3].is_pressed and CM == globals.ClockMode:  # wait for GO or MODE
             time.sleep(0.2)
-
-
 
 
 class AlarmClock(threading.Thread):
