@@ -42,20 +42,14 @@ def td_format_seconds(td_object):
     days, hours = divmod(hours, 24)
     years, days = divmod(days, 365)
 
-    if years == 0:
-        msg = "   "
-    else:
-        msg = "{0:2d}Y".format(years)
-    if days == 0:
-        msg += "   "
-    else:
-        msg += "{0:3d}d".format(days)
-    if hours == 0:
-        msg += "   "
-    else:
-        msg += "{0:2d}h".format(hours)
+    if years != 0:
+        msg = '{0:2d}Y'.format(years)
+    if days != 0:
+        msg += '{0:3d}d'.format(days)
+    if hours != 0:
+        msg += '{0:2d}h'.format(hours)
     if hours > 0:
-        msg += "{0:02d}{1:02d}".format(minutes, seconds)
+        msg += '{0:02d}{1:02d}'.format(minutes, seconds)
     else:
         msg += "{0:2d}{1:02d}".format(minutes, seconds)
 
@@ -125,7 +119,7 @@ def Chrono(mode=0):
             print_str16(td_format_milliseconds(t0 - t0), True)
             set_decimal_point16(12)
         else:
-            print_str16(td_format_seconds(t0 - t0), True)
+            print_str16("{:>16}".format(td_format_seconds(t0 - t0)), True)
             set_decimal_point16(13)
         write_display16()
 
@@ -139,7 +133,7 @@ def Chrono(mode=0):
                 print_str16(td_format_milliseconds(t1 - t0), True)
                 set_decimal_point16(12)
             else:
-                print_str16(td_format_seconds(t1 - t0), True)
+                print_str16("{:>16}".format(td_format_seconds(t1 - t0)), True)
                 set_decimal_point16(13)
             write_display16()
 
@@ -394,6 +388,94 @@ def ChessClock():
         Game time is set for both players, B[2] and B[4] move count up.down, B[3] when ready
         Press B[1] or B[5] to start a countdown, and alternate between players
     """
+    # display chess clock
+    # set time for player 1 (left)
+    # set time for player 2 (right)
+    # wait for start button
+    #     define who is white and who is black with another button
+    # while not end button or timer1 == 0 or timer2 == 0 or mode change
+    #     decrease player 1 timer until P1 button is pressed or timer 1 == 0 or timer 2 == 0 or mode change
+    #     stop player 1 timer
+    #     decrease player 2 timer until P2 button is pressed or timer 2 == 0 or timer 2 == 0 or mode change
+    #     stop player 2 timer
+    # blink when timer gets to zero
+    #
+    tw = timedelta(seconds=7200)
+    tb = timedelta(seconds=7200)
+    white_left = True
+    if white_left:
+        msg = "{:>6} WB {:>6}".format(td_format_seconds(tw), td_format_seconds(tb))
+    else:
+        msg = "{:>6} BW {:>6}".format(td_format_seconds(tb), td_format_seconds(tw))
+    set_decimal_point16(4)
+    set_decimal_point16(13)
+    print_str16(msg)
+    write_display16()
+
+    # wait for GO
+    CM = globals.ClockMode
+    if white_left:
+        msg = "{:>6} GO {:>6}".format(td_format_seconds(tw), td_format_seconds(tb))
+    else:
+        msg = "{:>6} GO {:>6}".format(td_format_seconds(tb), td_format_seconds(tw))
+    set_decimal_point16(3)
+    set_decimal_point16(13)
+    print_str16(msg)
+    write_display16()
+    while not B[3].is_pressed and CM == globals.ClockMode:
+        time.sleep(0.2)
+
+    # Running, Whites first
+    zero = timedelta(seconds=0)
+    finish = False
+    while not finish and CM == globals.ClockMode:
+        if white_left:
+            msg = "{:>6} WB {:>6}".format(td_format_seconds(tw), td_format_seconds(tb))
+        else:
+            msg = "{:>6} BW {:>6}".format(td_format_seconds(tb), td_format_seconds(tw))
+        print_str16(msg)
+        set_decimal_point16(3)
+        set_decimal_point16(13)
+        write_display16()
+
+        t0 = datetime.now() + timedelta(microseconds=tw * 1000000)
+        dt = datetime.timedelta(seconds=0)
+        while not globals.B[1].is_pressed and CM == globals.ClockMode:  # Whites clock running
+            t1 = datetime.now()
+            dt = t0 - t1
+            if tw - dt <= zero:
+                finish = True
+                # beep?
+            if white_left:
+                msg = "{:>6} WB {:>6}".format(td_format_seconds(tw-dt), td_format_seconds(tb))
+            else:
+                msg = "{:>6} BW {:>6}".format(td_format_seconds(tb), td_format_seconds(tw-dt))
+            set_decimal_point16(3)
+            set_decimal_point16(13)
+            print_str16(msg)
+            write_display16()
+        tw -= dt
+
+        if not finish:
+            t0 = datetime.now() + timedelta(microseconds=tb * 1000000)
+            dt = datetime.timedelta(seconds=0)
+            while not globals.B[5].is_pressed and CM == globals.ClockMode:  # Blacks clock running
+                t1 = datetime.now()
+                dt = t0 - t1
+                if tb - dt <= zero:
+                    finish = True
+                    # beep?
+                if white_left:
+                    msg = "{:>6} WB {:>6}".format(td_format_seconds(tw), td_format_seconds(tb-dt))
+                else:
+                    msg = "{:>6} BW {:>6}".format(td_format_seconds(tb-dt), td_format_seconds(tw))
+                set_decimal_point16(3)
+                set_decimal_point16(13)
+                print_str16(msg)
+                write_display16()
+            tb -= dt
+
+
 
 
 class AlarmClock(threading.Thread):

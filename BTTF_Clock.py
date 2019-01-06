@@ -191,7 +191,8 @@ class DisplayThread(threading.Thread):
             elif globals.ClockMode == 3:
                 weather_forecast('222', 4)
             elif globals.ClockMode == 4:
-                TimeSinceDate(globals.FromDate)
+                ChessClock()
+                # TimeSinceDate(globals.FromDate)
             elif globals.ClockMode == 5:
                 TimeToDeadline(globals.Deadline)
             elif globals.ClockMode == 6:
