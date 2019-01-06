@@ -421,16 +421,16 @@ def ChessClock():
     #     stop player 2 timer
     # blink when timer gets to zero
     #
-    tw = timedelta(seconds=7200)
-    tb = timedelta(seconds=7200)
+    tw = timedelta(seconds=3660)
+    tb = timedelta(seconds=4000)
     white_left = True
     if white_left:
         msg = "{:>6} WB {:>6}".format(td_format_seconds_6(tw), td_format_seconds_6(tb))
     else:
         msg = "{:>6} BW {:>6}".format(td_format_seconds_6(tb), td_format_seconds_6(tw))
+    print_str16(msg)
     set_decimal_point16(4)
     set_decimal_point16(13)
-    print_str16(msg)
     write_display16()
 
     # wait for GO
@@ -439,9 +439,9 @@ def ChessClock():
         msg = "{:>6} GO {:>6}".format(td_format_seconds_6(tw), td_format_seconds_6(tb))
     else:
         msg = "{:>6} GO {:>6}".format(td_format_seconds_6(tb), td_format_seconds_6(tw))
+    print_str16(msg)
     set_decimal_point16(3)
     set_decimal_point16(13)
-    print_str16(msg)
     write_display16()
     while not globals.B[3].is_pressed and CM == globals.ClockMode:
         time.sleep(0.2)
@@ -451,7 +451,7 @@ def ChessClock():
     finish = False
     while not finish and CM == globals.ClockMode:
 
-        t0 = datetime.now() #  + timedelta(microseconds=tw.total_seconds() * 1000000)
+        t0 = datetime.now()
         while not globals.B[1].is_pressed and CM == globals.ClockMode:  # Whites clock running
             t1 = datetime.now()
             dt = t1 - t0
@@ -462,15 +462,15 @@ def ChessClock():
                 msg = "{:>6} WB {:>6}".format(td_format_seconds_6(tw-dt), td_format_seconds_6(tb))
             else:
                 msg = "{:>6} BW {:>6}".format(td_format_seconds_6(tb), td_format_seconds_6(tw-dt))
+            print_str16(msg)
             set_decimal_point16(3)
             set_decimal_point16(13)
-            print_str16(msg)
             write_display16()
             time.sleep(0.2)
         tw -= dt
 
         if not finish:
-            t0 = datetime.now() #+ timedelta(microseconds=tb.total_seconds() * 1000000)
+            t0 = datetime.now()
             while not globals.B[5].is_pressed and CM == globals.ClockMode:  # Blacks clock running
                 t1 = datetime.now()
                 dt = t1 - t0
@@ -481,9 +481,9 @@ def ChessClock():
                     msg = "{:>6} WB {:>6}".format(td_format_seconds_6(tw), td_format_seconds_6(tb-dt))
                 else:
                     msg = "{:>6} BW {:>6}".format(td_format_seconds_6(tb-dt), td_format_seconds_6(tw))
+                print_str16(msg)
                 set_decimal_point16(3)
                 set_decimal_point16(13)
-                print_str16(msg)
                 write_display16()
                 time.sleep(0.2)
             tb -= dt
