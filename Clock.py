@@ -427,13 +427,13 @@ def ChessClock():
     # Indicate sides
     white_left = False
     CM = globals.ClockMode
-    while not globals.B[1].is_pressed and not globals.B[3].is_pressed and not globals.B[5].is_pressed and CM == globals.ClockMode:
+    while (not globals.B[3].is_pressed) and CM == globals.ClockMode:
         if globals.B[1].is_pressed or globals.B[5].is_pressed:
             white_left = not white_left
         if white_left:
-            print_str16("Whites  Blacks")
+            print_str16("Whites    Blacks")
         else:
-            print_str16("Blacks  Whites")
+            print_str16("Blacks    Whites")
         write_display16()
         time.sleep(0.2)
 
