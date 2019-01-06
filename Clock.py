@@ -424,7 +424,7 @@ def ChessClock():
 
 
     # Indicate sides
-    white_left = False
+    white_left = True
     CM = globals.ClockMode
     while (not globals.B[3].is_pressed) and CM == globals.ClockMode:
         if globals.B[1].is_pressed or globals.B[5].is_pressed:
@@ -448,11 +448,11 @@ def ChessClock():
 
     # set playing time: Whites
 
-    msg = ['Whites s ', 'Whites m ', 'Whites h ', 'Set      ']
+    msg = ['Whites s  ', 'Whites m  ', 'Whites h  ', 'Set       ']
     count = [0, 0, 0]  # sec, min, hour
 
     pos = 0
-    print_str16("{3:9}{0:1}h{1:02}{2:02}".format(count[2], count[1], count[0], msg[pos]))
+    print_str16("{3:10}{0:1}h{1:02}{2:02}".format(count[2], count[1], count[0], msg[pos]))
     set_decimal_point16(13)
     write_display16()
 
@@ -466,26 +466,26 @@ def ChessClock():
                 count[pos] = upper_limit[pos] - 1
             if count[pos] >= upper_limit[pos]:
                 count[pos] = lower_limit[pos]
-            print_str16("{3:9}{0:1}h{1:02}{2:02}".format(count[2], count[1], count[0], msg[pos]))
+            print_str16("{3:10}{0:1}h{1:02}{2:02}".format(count[2], count[1], count[0], msg[pos]))
             set_decimal_point16(12)
             write_display16()
             time.sleep(0.2)
         time.sleep(0.2)
         pos += 1
         if CM == globals.ClockMode:  # timer set: display
-            print_str16("{3:9}{0:1}h{1:02}{2:02}".format(count[2], count[1], count[0], msg[pos]))
+            print_str16("{3:10}{0:1}h{1:02}{2:02}".format(count[2], count[1], count[0], msg[pos]))
             set_decimal_point16(12)
             write_display16()
             time.sleep(1)
 
     tw = timedelta(seconds = count[0] + 60 * count[1] + 60 * 60 * count[2])  # seconds
 
-    msg = ['Blacks s ', 'Blacks m ', 'Blacks h ', 'Set      ']
+    msg = ['Blacks s  ', 'Blacks m  ', 'Blacks h  ', 'Set       ']
     count = [0, 0, 0]  # sec, min, hour
 
     # set playing time: Blacks
     pos = 0
-    print_str16("{3:9}{0:1}h{1:02}{2:02}".format(count[2], count[1], count[0], msg[pos]))
+    print_str16("{3:10}{0:1}h{1:02}{2:02}".format(count[2], count[1], count[0], msg[pos]))
     set_decimal_point16(13)
     write_display16()
 
@@ -499,14 +499,14 @@ def ChessClock():
                 count[pos] = upper_limit[pos] - 1
             if count[pos] >= upper_limit[pos]:
                 count[pos] = lower_limit[pos]
-            print_str16("{3:9}{0:1}h{1:02}{2:02}".format(count[2], count[1], count[0], msg[pos]))
+            print_str16("{3:10}{0:1}h{1:02}{2:02}".format(count[2], count[1], count[0], msg[pos]))
             set_decimal_point16(12)
             write_display16()
             time.sleep(0.2)
         time.sleep(0.2)
         pos += 1
         if CM == globals.ClockMode:  # timer set: display
-            print_str16("{3:9}{0:1}h{1:02}{2:02}".format(count[2], count[1], count[0], msg[pos]))
+            print_str16("{3:10}{0:1}h{1:02}{2:02}".format(count[2], count[1], count[0], msg[pos]))
             set_decimal_point16(12)
             write_display16()
             time.sleep(1)
@@ -543,12 +543,12 @@ def ChessClock():
     while not finish and CM == globals.ClockMode:
 
         t0 = datetime.now()
-        while not globals.B[white_button].is_pressed and CM == globals.ClockMode:  # Whites clock running
+        while not finish and not globals.B[white_button].is_pressed and CM == globals.ClockMode:  # Whites clock running
             t1 = datetime.now()
             dt = t1 - t0
             if tw - dt <= zero:
                 finish = True
-                # beep?
+                globals.BUZZ.beep(0.1, 0.05, 5)
             if white_left:
                 msg = "{:>6} WB {:>6}".format(td_format_seconds_6(tw-dt), td_format_seconds_6(tb))
             else:
@@ -562,12 +562,12 @@ def ChessClock():
 
         if not finish:
             t0 = datetime.now()
-            while not globals.B[black_button].is_pressed and CM == globals.ClockMode:  # Blacks clock running
+            while not finish and not globals.B[black_button].is_pressed and CM == globals.ClockMode:  # Blacks clock running
                 t1 = datetime.now()
                 dt = t1 - t0
                 if tb - dt <= zero:
                     finish = True
-                    # beep?
+                    globals.BUZZ.beep(0.1, 0.05, 5)
                 if white_left:
                     msg = "{:>6} WB {:>6}".format(td_format_seconds_6(tw), td_format_seconds_6(tb-dt))
                 else:
@@ -578,6 +578,10 @@ def ChessClock():
                 write_display16()
                 time.sleep(0.2)
             tb -= dt
+    if finish:
+        finish = False
+        while not globals.B[3].is_pressed and CM == globals.ClockMode:  # wait for GO or MODE
+            time.sleep(0.2)
 
 
 
