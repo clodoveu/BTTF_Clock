@@ -43,13 +43,15 @@ def td_format_seconds(td_object):
     years, days = divmod(days, 365)
 
     msg = ''
+    flag = False
     if years != 0:
         msg = '{0:2d}Y'.format(years)
-    if days != 0:
+        Flag = True
+    if days != 0 or Flag:
         msg += '{0:3d}d'.format(days)
-    if hours != 0:
+    if hours != 0 or Flag:
         msg += '{0:2d}h'.format(hours)
-    if hours > 0:
+    if hours > 0 or Flag:
         msg += '{0:02d}{1:02d}'.format(minutes, seconds)
     else:
         msg += "{0:2d}{1:02d}".format(minutes, seconds)
@@ -423,7 +425,7 @@ def ChessClock():
     set_decimal_point16(13)
     print_str16(msg)
     write_display16()
-    while not B[3].is_pressed and CM == globals.ClockMode:
+    while not globals.B[3].is_pressed and CM == globals.ClockMode:
         time.sleep(0.2)
 
     # Running, Whites first
