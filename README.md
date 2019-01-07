@@ -251,7 +251,7 @@ TBD
 
 # 8. Operation
 
-            Player  Chrono  Clock   Chess
+Modes       Player  Chrono  Clock   Chess
 Button 1    Rew     Reset   --      Left player
 Button 2    Vol-    --      Set-    Set-
 Button 3    Play    Go      Go      Go
@@ -262,10 +262,10 @@ Button 0    Mode change (short press)
             Back to default mode (long press)
 
 Button 6    Brightness change (short press)
-            Shutdown (long press)
+            Shutdown (long press), button 3 to confirm, button 5 to cancel
             
 Button 2 + Button 4 in Mode 1 (BTTF clock): reload parameters file
-Button 1 + Button 5 in Mode 1 (BTTF clock): terminate program
+Button 1 + Button 5 in Mode 1 (BTTF clock): terminate program, Button 3 to confirm 
 
 
 
