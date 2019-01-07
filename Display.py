@@ -173,7 +173,7 @@ class ScrollDisplayThread(threading.Thread):
     def run(self):
         pos = 0
         while (not self.stop) and (len(self.msg) > 0):
-            if globals.display_override.is_clear():
+            if not globals.display_override.is_set():
                 for i in range(self.width):
                     set_digit16(i, self.msg[(i + pos) % len(self.msg)])
                 pos += 1
