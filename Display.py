@@ -68,42 +68,44 @@ def init16():
         d[i].set_brightness(globals.Brightness)
 
 
-def set_digit16(pos16, digit, decimal_point=False):
+def set_digit16(pos16, digit, decimal_point=False, print_override=False):
     """ Set the digit at position pos16,
         turning on the decimal point or not
         pos16 counts left to right 0->15
     """
-    dev = 3 - pos16 // 4
-    index = pos16 % 4
-    d[dev].set_digit(index, digit, decimal_point)
+    if not (globals.display_override.is_set() and print_override):
+        dev = 3 - pos16 // 4
+        index = pos16 % 4
+        d[dev].set_digit(index, digit, decimal_point)
 
 
-def clear_digit16(pos16):
+def clear_digit16(pos16, override=False):
     """ Clears the digit at position pos16,
         and clears the decimal point
         pos16 counts left to right 0->15
     """
     dev = 3 - pos16 // 4
     index = pos16 % 4
-    d[dev].set_digit(index, ' ', False)
+    d[dev].set_digit(index, ' ', False, print_override=override)
 
 
-def clear_decimal_point16(pos16):
+def clear_decimal_point16(pos16, override=False):
     """ Clears the decimal point at pos16
         pos16 counts left to right 0->15
     """
     dev = 3 - pos16 // 4
     index = pos16 % 4
-    d[dev].set_decimal(index, False)
+    d[dev].set_decimal(index, False, print_override=overrride)
 
 
-def set_decimal_point16(pos16):
+def set_decimal_point16(pos16, print_override=False):
     """ Turns on the decimal point at pos16
         pos16 counts left to right 0->15
     """
-    dev = 3 - pos16 // 4
-    index = pos16 % 4
-    d[dev].set_decimal(index, True)
+    if not (globals.display_override.is_set() and print_override):
+        dev = 3 - pos16 // 4
+        index = pos16 % 4
+        d[dev].set_decimal(index, True)
 
 
 def clear_display16():
@@ -114,13 +116,12 @@ def clear_display16():
     write_display16()
 
 
-def write_display16(override = False):
+def write_display16():
     """ Writes the display buffer to the hardware
         The override parameter causes display not to take place if a global event is set
     """
-    if not (globals.display_override.is_set() and override):
-        for i in range(0, 4):
-            d[i].write_display()
+    for i in range(0, 4):
+        d[i].write_display()
 
 
 def set_brightness16(br=15):
@@ -131,29 +132,29 @@ def set_brightness16(br=15):
         d[i].set_brightness(br)
 
 
-def print_str16(value, justify_right=False):
+def print_str16(value, justify_right=False, override=False):
     """ Prints the string to the 16-digit display
         Calculate starting position of digits based on justification.
     """
     pos = (16 - len(value)) if justify_right else 0
     # Go through each character and print it on the display.
     for i, ch in enumerate(value):
-        set_digit16(i + pos, ch)
+        set_digit16(i + pos, ch, print_override=override)
 
 
-def print_time(tstr, justify_left=False):
+def print_time(tstr, justify_left=False, override=False):
     """ Prints a min.sec string in the four rightmost (default)
         or leftmost 4 digits, with decimal point)
     """
     pos = 0 if justify_left else 12
     # Go through each character in the time string
     for i, ch in enumerate(tstr):
-        set_digit16(i + pos, ch)
+        set_digit16(i + pos, ch, print_override=override)
     if justify_left:
-        set_decimal_point16(1)
+        set_decimal_point16(1, print_override=overide)
         d[0].write_display()
     else:
-        set_decimal_point16(13)
+        set_decimal_point16(13, print_override=override)
         d[3].write_display()
 
 
@@ -172,10 +173,11 @@ class ScrollDisplayThread(threading.Thread):
     def run(self):
         pos = 0
         while (not self.stop) and (len(self.msg) > 0):
-            for i in range(self.width):
-                set_digit16(i, self.msg[(i + pos) % len(self.msg)])
-            pos += 1
-            pos = pos % len(self.msg)
-            write_display16()
-            time.sleep(0.1)
+            if globals.display_override.is_clear():
+                for i in range(self.width):
+                    set_digit16(i, self.msg[(i + pos) % len(self.msg)])
+                pos += 1
+                pos = pos % len(self.msg)
+                write_display16()
+                time.sleep(0.1)
 

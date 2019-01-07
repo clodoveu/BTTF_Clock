@@ -127,16 +127,16 @@ class ControlThread(threading.Thread):
                 mpc.stop()
                 mpc.clear()
                 clear_display16()
-                print_str16("Reloading...")
-                write_display16(True)  # override other displays
+                print_str16("Reloading...", print_override=True)
+                write_display16()  # override other displays
                 time.sleep(1)
                 # actual reloading
                 getParameters()
                 globals.ClockMode = globals.DefaultClockMode
                 set_brightness16(globals.Brightness)
                 clear_display16()
-                print_str16("Ready")
-                write_display16(True)
+                print_str16("Ready", print_override=True)
+                write_display16()
                 time.sleep(1)
                 print("Done reloading.")
                 globals.display_override.clear()
@@ -149,8 +149,9 @@ class ControlThread(threading.Thread):
                     d0 = datetime.now()
                     while not globals.B[3].is_pressed and CM == globals.ClockMode:
                         globals.display_override.set()
-                        print_str16("Terminate?      ")
-                        write_display16(True)  # override other displays
+                        clear_display16()
+                        print_str16("Terminate?      ", print_override=True)
+                        write_display16()  # override other displays
                         time.sleep(0.5)
                         dt = datetime.now() - d0
                         if dt.total_seconds() > 5:
@@ -282,15 +283,17 @@ def shutdown():
     if active_time > 2.0:
         while not globals.B[3].is_pressed and not globals.B[5].is_pressed:
             globals.display_override.set()
-            print_str16('Shutdown?       ')
-            write_display16(True)
+            clear_display16()
+            print_str16('Shutdown?       ', print_override=True)
+            write_display16()
             if globals.B[3].is_pressed:
                 really_sd = True
                 break
             time.sleep(0.2)
         if really_sd:
-            print_str16('Shutdown in 1min')
-            write_display16(True)
+            clear_display16()
+            print_str16('Shutdown in 1min', print_override=True)
+            write_display16()
             time.sleep(30)
             clear_display16()
             call('sudo shutdown now', shell=True)
