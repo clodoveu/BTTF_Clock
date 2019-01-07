@@ -302,6 +302,7 @@ def shutdown():
 
 def main():
     # initialization
+    print("*** Starting: {}".format(datetime.now().strftime("%a %Y-%m-%d %H:%M.%S")))
     print("Reading parameters...")
     getParameters()
 
