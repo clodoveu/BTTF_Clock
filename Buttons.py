@@ -26,6 +26,7 @@ B2 = 23 ## VOL- button
 B3 = 24 ## PLAY-PAUSE / GO button
 B4 = 25 ## VOL+ button / STOP button
 B5 = 27 ## FWD button
+B6 = 16 ## Shutdown / Brightness
 
 BUZZ = 13 ## Buzzer
 """
@@ -45,6 +46,7 @@ def initButtons():
     globals.B[3] = Button(24)
     globals.B[4] = Button(25)
     globals.B[5] = Button(27)
+    globals.B[6] = Button(16, hold_time = 0.2, hold_repeat=True)
 
 
 def cleanupButtons():

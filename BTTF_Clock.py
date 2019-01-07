@@ -110,22 +110,6 @@ def getParameters():
     mpc.update()
 
 
-def shutdown():
-    """ Executes shutdown when button 6 is held for more than 5 seconds
-        Button 3 (OK) confirms; Button 5 cancels
-    """
-    clear_display16()
-    print_str16('Shutdown? ')
-    time.sleep(1)
-    while not globals.B[3].is_pressed:
-        if globals.B[5].is_pressed:
-            break
-        time.sleep(0.2)
-    clear_display16()
-    call('sudo shutdown +1', shell=True)
-    sys.exit()
-
-
 class ControlThread(threading.Thread):
     """ Key control thread
         For special button uses, global in relation to clock modes
@@ -279,6 +263,38 @@ def change_mode():
         globals.ClockMode += 1
     print("ClockMode: {}".format(globals.ClockMode))
 
+def shutdown():
+    """ Executes shutdown when button 6 is held for more than 5 seconds
+        Button 3 (OK) confirms; Button 5 cancels
+        Short press: sets brightness of the display
+    """
+    global button_hold_time
+
+    br = datetime.now()  # time for button release
+    td = br - button_hold_time  # timedelta object
+    active_time = td.total_seconds()
+
+    if active_time > 2.0:
+        print_str16('Shutdown? ')
+        time.sleep(1)
+        while not globals.B[3].is_pressed:
+            if globals.B[5].is_pressed:
+                break
+            time.sleep(0.2)
+        clear_display16()
+        call('sudo shutdown +1', shell=True)
+        sys.exit()
+    elif active_time < 0.2:
+        if globals.Brightness == 0:
+            globals.Brightness = 5
+        elif globals.Brightness == 5:
+            globals.Brightness = 10
+        elif globals.Brightness == 10:
+            globals.Brightness = 15
+        else:
+            globals.Brightness = 0
+        set_brightness16(globals.Brightness)
+
 
 def main():
     # initialization
@@ -289,8 +305,10 @@ def main():
     init16()
 
     print("Initializing buttons...")
-    globals.B[0].when_pressed = button_held
+    globals.B[0].when_pressed = button_held  # MODE button
     globals.B[0].when_released = change_mode
+    globals.B[6].when_pressed = button_held  # SHUTDOWN button
+    globals.B[6].when_released = shutdown
 
     # Threading start
     try:
@@ -303,12 +321,14 @@ def main():
         # signal.pause()
     except (KeyboardInterrupt, SystemExit):
         globals.running.clear()
-        t1.join()
-        tc.join()
+        if t1.isAlive():
+            t1.join()
+        if tc.isAlive():
+            tc.join()
         clear_display16()
         cleanupButtons()
-        mpc.stop()
-        mpc.clear()
+        # mpc.stop()
+        # mpc.clear()
         sys.exit()
     # finally:
     #    cleanupButtons()

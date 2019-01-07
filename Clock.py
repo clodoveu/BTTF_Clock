@@ -482,7 +482,7 @@ def ChessClock():
     tw = timedelta(seconds=count[0] + 60 * count[1] + 60 * 60 * count[2])  # seconds
 
     msg = ['Blacks s  ', 'Blacks m  ', 'Blacks h  ', 'Set       ']
-    count = [0, 0, 0]  # sec, min, hour
+    # keep the count vector as a default for the blacks, or set count = [0, 0, 0]  # sec, min, hour
 
     # set playing time: Blacks
     pos = 0

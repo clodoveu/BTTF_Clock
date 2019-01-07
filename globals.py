@@ -34,7 +34,8 @@ TimeZones = []  # list of time zones
 timezonesFile = ".BTTF_timezones"
 
 # Button objects from gpiozero, B[0] t0 B[5]
-B = [Button(12, hold_time=0.2, hold_repeat=True), Button(22), Button(23), Button(24), Button(25), Button(27)]
+B = [Button(12, hold_time=0.2, hold_repeat=True), Button(22), Button(23), Button(24), Button(25), Button(27),
+     Button(16, hold_time=0.2, hold_repeat=True)]
 
 BUZZ = Buzzer(13)
 running = threading.Event()  # Event to catch the end of the program and finish threads and infinite loops

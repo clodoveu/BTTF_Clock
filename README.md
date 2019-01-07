@@ -136,7 +136,7 @@ connection_timeout	"2000000"
 
 ### Python libraries and modules:
 
-- Installed:
+- Installed (with sudo pip3):
   - [gpiozero](https://gpiozero.readthedocs.io/en/stable/index.html#)
   - [unidecode](https://pypi.org/project/Unidecode/)
   - [xmltodict](https://pypi.org/project/xmltodict/)
