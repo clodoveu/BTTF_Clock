@@ -118,7 +118,7 @@ def write_display16(override = False):
     """ Writes the display buffer to the hardware
         The override parameter causes display not to take place if a global event is set
     """
-    if globals.display_override.is_set() and override:
+    if not (globals.display_override.is_set() and override):
         for i in range(0, 4):
             d[i].write_display()
 
