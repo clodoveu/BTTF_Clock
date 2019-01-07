@@ -122,12 +122,13 @@ class ControlThread(threading.Thread):
     def run(self):
         while globals.running.is_set():
             if globals.B[2].is_pressed and globals.B[4].is_pressed:  # reload parameters file
+                globals.display_override.set()
                 print("Reloading...")
                 mpc.stop()
                 mpc.clear()
                 clear_display16()
                 print_str16("Reloading...")
-                write_display16()
+                write_display16(True)  # override other displays
                 time.sleep(1)
                 # actual reloading
                 getParameters()
@@ -135,9 +136,10 @@ class ControlThread(threading.Thread):
                 set_brightness16(globals.Brightness)
                 clear_display16()
                 print_str16("Ready")
-                write_display16()
+                write_display16(True)
                 time.sleep(1)
                 print("Done reloading.")
+                globals.display_override.clear()
 
             if globals.B[1].is_pressed and globals.B[5].is_pressed:  # exit system
                 if globals.ClockMode == 1:
@@ -146,8 +148,9 @@ class ControlThread(threading.Thread):
                     CM = globals.ClockMode
                     d0 = datetime.now()
                     while not globals.B[3].is_pressed and CM == globals.ClockMode:
+                        globals.display_override.set()
                         print_str16("Terminate?      ")
-                        write_display16()
+                        write_display16(True)  # override other displays
                         time.sleep(0.5)
                         dt = datetime.now() - d0
                         if dt.total_seconds() > 5:
@@ -157,6 +160,7 @@ class ControlThread(threading.Thread):
                             clear_display16()
                             cleanupButtons()
                             sys.exit()
+                    globals.display_override.clear()
             time.sleep(0.2)
 
 
@@ -277,19 +281,21 @@ def shutdown():
 
     if active_time > 2.0:
         while not globals.B[3].is_pressed and not globals.B[5].is_pressed:
+            globals.display_override.set()
             print_str16('Shutdown?       ')
-            write_display16()
+            write_display16(True)
             if globals.B[3].is_pressed:
                 really_sd = True
                 break
             time.sleep(0.2)
         if really_sd:
             print_str16('Shutdown in 1min')
-            write_display16()
+            write_display16(True)
             time.sleep(30)
             clear_display16()
             call('sudo shutdown now', shell=True)
             sys.exit()
+        globals.display_override.clear()
     elif active_time < 0.2:
         if globals.Brightness == 0:
             globals.Brightness = 5

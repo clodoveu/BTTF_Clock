@@ -41,4 +41,5 @@ BUZZ = Buzzer(13)
 running = threading.Event()  # Event to catch the end of the program and finish threads and infinite loops
 running.set()
 
-
+display_override = threading.Event()  # Event to block display messages if some prioritary condition is running
+display_override.clear()

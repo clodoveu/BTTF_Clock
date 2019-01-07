@@ -247,7 +247,26 @@ weather and 4-day forecasts. Both are for Brazil and come from CPTEC/INPE, See h
 
 # 7. Initialization at boot
 
-TBD
+A bash script is used in the home directory:
+
+```
+clock_init.sh  # remember to chmod to 755
+
+cd ~/BTTF_Clock
+python3 BTTF_Clock.py >> ./log.txt &
+```
+
+The script is then called up by /etc/rc.local:
+
+```
+
+(...)
+/home/pi/clock_init.sh
+
+exit 0
+
+```
+
 
 # 8. Operation
 
@@ -257,6 +276,12 @@ Button 2    Vol-    --      Set-    Set-
 Button 3    Play    Go      Go      Go
 Button 4    Vol+    Stop    Set+    Set+
 Button 5    Fwd     Cancel  Cancel  Right player
+
+Button      1       2       3       4       5
+Player      Rew     Vol-    Play    Vol+    Fwd
+Clock       --      Set-    Go      Set+    Cancel
+Chrono      Reset   --      Go      Stop    Cancel
+Chess       LeftPl  Set-    Go      Set+    RightPl
 
 Button 0    Mode change (short press)
             Back to default mode (long press)

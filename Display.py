@@ -114,11 +114,13 @@ def clear_display16():
     write_display16()
 
 
-def write_display16():
+def write_display16(override = False):
     """ Writes the display buffer to the hardware
+        The override parameter causes display not to take place if a global event is set
     """
-    for i in range(0, 4):
-        d[i].write_display()
+    if globals.display_override.is_set() and override:
+        for i in range(0, 4):
+            d[i].write_display()
 
 
 def set_brightness16(br=15):
