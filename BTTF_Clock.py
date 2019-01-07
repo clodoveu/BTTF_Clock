@@ -277,14 +277,15 @@ def shutdown():
 
     if active_time > 2.0:
         while not globals.B[3].is_pressed and not globals.B[5].is_pressed:
-            print_str16('Shutdown? ')
+            print_str16('Shutdown?       ')
             write_display16()
             if globals.B[3].is_pressed:
                 really_sd = True
                 break
             time.sleep(0.2)
         if really_sd:
-            clear_display16()
+            print_str16('Shutdown in 1min')
+            write_display16()
             call('sudo shutdown +1', shell=True)
             sys.exit()
     elif active_time < 0.2:
