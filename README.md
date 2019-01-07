@@ -251,7 +251,21 @@ TBD
 
 # 8. Operation
 
-TBD
+            Player  Chrono  Clock   Chess
+Button 1    Rew     Reset   --      Left player
+Button 2    Vol-    --      Set-    Set-
+Button 3    Play    Go      Go      Go
+Button 4    Vol+    Stop    Set+    Set+
+Button 5    Fwd     Cancel  Cancel  Right player
+
+Button 0    Mode change (short press)
+            Back to default mode (long press)
+
+Button 6    Brightness change (short press)
+            Shutdown (long press)
+            
+Button 2 + Button 4 in Mode 1 (BTTF clock): reload parameters file
+Button 1 + Button 5 in Mode 1 (BTTF clock): terminate program
 
 
 
