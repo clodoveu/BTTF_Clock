@@ -127,7 +127,7 @@ class ControlThread(threading.Thread):
                 mpc.stop()
                 mpc.clear()
                 clear_display16()
-                print_str16("Reloading...", print_override=True)
+                print_str16("Reloading...", override=True)
                 write_display16()  # override other displays
                 time.sleep(1)
                 # actual reloading
@@ -135,7 +135,7 @@ class ControlThread(threading.Thread):
                 globals.ClockMode = globals.DefaultClockMode
                 set_brightness16(globals.Brightness)
                 clear_display16()
-                print_str16("Ready", print_override=True)
+                print_str16("Ready", override=True)
                 write_display16()
                 time.sleep(1)
                 print("Done reloading.")
@@ -150,7 +150,7 @@ class ControlThread(threading.Thread):
                     while not globals.B[3].is_pressed and CM == globals.ClockMode:
                         globals.display_override.set()
                         clear_display16()
-                        print_str16("Terminate?      ", print_override=True)
+                        print_str16("Terminate?      ", override=True)
                         write_display16()  # override other displays
                         time.sleep(0.5)
                         dt = datetime.now() - d0
@@ -284,7 +284,7 @@ def shutdown():
         while not globals.B[3].is_pressed and not globals.B[5].is_pressed:
             globals.display_override.set()
             clear_display16()
-            print_str16('Shutdown?       ', print_override=True)
+            print_str16('Shutdown?       ', override=True)
             write_display16()
             if globals.B[3].is_pressed:
                 really_sd = True
@@ -292,7 +292,7 @@ def shutdown():
             time.sleep(0.2)
         if really_sd:
             clear_display16()
-            print_str16('Shutdown in 1min', print_override=True)
+            print_str16('Shutdown in 1min', override=True)
             write_display16()
             time.sleep(30)
             clear_display16()
