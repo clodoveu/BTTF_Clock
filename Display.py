@@ -73,7 +73,7 @@ def set_digit16(pos16, digit, decimal_point=False, print_override=False):
         turning on the decimal point or not
         pos16 counts left to right 0->15
     """
-    if not (globals.display_override.is_set() and print_override):
+    if (not globals.display_override.is_set()) or print_override:
         dev = 3 - pos16 // 4
         index = pos16 % 4
         d[dev].set_digit(index, digit, decimal_point)
@@ -91,7 +91,7 @@ def clear_decimal_point16(pos16, print_override=False):
     """ Clears the decimal point at pos16
         pos16 counts left to right 0->15
     """
-    if not (globals.display_override.is_set() and print_override):
+    if (not globals.display_override.is_set()) or print_override:
         dev = 3 - pos16 // 4
         index = pos16 % 4
         d[dev].set_decimal(index, False)
@@ -101,7 +101,7 @@ def set_decimal_point16(pos16, print_override=False):
     """ Turns on the decimal point at pos16
         pos16 counts left to right 0->15
     """
-    if not (globals.display_override.is_set() and print_override):
+    if (not globals.display_override.is_set()) or print_override:
         dev = 3 - pos16 // 4
         index = pos16 % 4
         d[dev].set_decimal(index, True)
