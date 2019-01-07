@@ -273,17 +273,20 @@ def shutdown():
     br = datetime.now()  # time for button release
     td = br - button_hold_time  # timedelta object
     active_time = td.total_seconds()
+    really_sd = False
 
     if active_time > 2.0:
-        print_str16('Shutdown? ')
-        time.sleep(1)
-        while not globals.B[3].is_pressed:
-            if globals.B[5].is_pressed:
+        while not globals.B[3].is_pressed and not globals.B[5].is_pressed:
+            print_str16('Shutdown? ')
+            write_display16()
+            if globals.B[3].is_pressed:
+                really_sd = True
                 break
             time.sleep(0.2)
-        clear_display16()
-        call('sudo shutdown +1', shell=True)
-        sys.exit()
+        if really_sd:
+            clear_display16()
+            call('sudo shutdown +1', shell=True)
+            sys.exit()
     elif active_time < 0.2:
         if globals.Brightness == 0:
             globals.Brightness = 5
