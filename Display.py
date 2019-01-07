@@ -84,18 +84,17 @@ def clear_digit16(pos16, override=False):
         and clears the decimal point
         pos16 counts left to right 0->15
     """
-    dev = 3 - pos16 // 4
-    index = pos16 % 4
-    d[dev].set_digit(index, ' ', False, print_override=override)
+    d[dev].set_digit16(pos16, ' ', False, print_override=override)
 
 
-def clear_decimal_point16(pos16, override=False):
+def clear_decimal_point16(pos16, print_override=False):
     """ Clears the decimal point at pos16
         pos16 counts left to right 0->15
     """
-    dev = 3 - pos16 // 4
-    index = pos16 % 4
-    d[dev].set_decimal(index, False, print_override=overrride)
+    if not (globals.display_override.is_set() and print_override):
+        dev = 3 - pos16 // 4
+        index = pos16 % 4
+        d[dev].set_decimal(index, False)
 
 
 def set_decimal_point16(pos16, print_override=False):
@@ -151,7 +150,7 @@ def print_time(tstr, justify_left=False, override=False):
     for i, ch in enumerate(tstr):
         set_digit16(i + pos, ch, print_override=override)
     if justify_left:
-        set_decimal_point16(1, print_override=overide)
+        set_decimal_point16(1, print_override=override)
         d[0].write_display()
     else:
         set_decimal_point16(13, print_override=override)
