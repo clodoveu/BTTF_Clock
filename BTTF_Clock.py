@@ -286,7 +286,9 @@ def shutdown():
         if really_sd:
             print_str16('Shutdown in 1min')
             write_display16()
-            call('sudo shutdown +1', shell=True)
+            time.sleep(30)
+            clear_display16()
+            call('sudo shutdown now', shell=True)
             sys.exit()
     elif active_time < 0.2:
         if globals.Brightness == 0:
