@@ -411,18 +411,6 @@ def ChessClock():
         Game time is set for both players, B[2] and B[4] move count up.down, B[3] when ready
         Press B[1] or B[5] to start a countdown, and alternate between players
     """
-    # display chess clock
-    # set time for player 1 (left)
-    # set time for player 2 (right)
-    # wait for start button
-    #     define who is white and who is black with another button
-    # while not end button or timer1 == 0 or timer2 == 0 or mode change
-    #     decrease player 1 timer until P1 button is pressed or timer 1 == 0 or timer 2 == 0 or mode change
-    #     stop player 1 timer
-    #     decrease player 2 timer until P2 button is pressed or timer 2 == 0 or timer 2 == 0 or mode change
-    #     stop player 2 timer
-    # blink when timer gets to zero
-    #
 
     # Indicate sides
     white_left = True
@@ -514,17 +502,6 @@ def ChessClock():
 
     tb = timedelta(seconds=count[0] + 60 * count[1] + 60 * 60 * count[2])  # seconds
 
-    '''
-    if white_left:
-        msg = "{:>6} WB {:>6}".format(td_format_seconds_6(tw), td_format_seconds_6(tb))
-    else:
-        msg = "{:>6} BW {:>6}".format(td_format_seconds_6(tb), td_format_seconds_6(tw))
-    print_str16(msg)
-    set_decimal_point16(4)
-    set_decimal_point16(13)
-    write_display16()
-    '''
-
     # wait for GO
     clear_display16()
     if white_left:
@@ -607,7 +584,8 @@ class AlarmClock(threading.Thread):
             if (d0 >= self.alarmTime) and self.alarmActive:
                 globals.display_override.set()
                 print("Wake up time")  # sound alarm
-                print_str16("Alarm!  Alarm!  ", override=True)
+                print_str16("Alarm Alarm " + self.alarmTime.strftime("%H%M"), override=True)
+                set_decimal_point16(13, print_override=True)
                 write_display16()
                 if globals.AlarmTone == 0:
                     globals.BUZZ.beep(0.1, 0.05, 5)

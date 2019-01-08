@@ -286,7 +286,7 @@ def shutdown():
             if globals.B[3].is_pressed:
                 really_sd = True
                 break
-            time.sleep(0.1)
+            time.sleep(0.2)
         if really_sd:
             clear_display16()
             print_str16('Shutdown in 1min', override=True)
