@@ -605,7 +605,10 @@ class AlarmClock(threading.Thread):
         while not self.stop and globals.running.is_set():
             d0 = datetime.now()
             if (d0 >= self.alarmTime) and self.alarmActive:
+                globals.display_override.set()
                 print("Wake up time")  # sound alarm
+                print_str16("Alarm!  Alarm!  ", override=True)
+                write_display16()
                 if globals.AlarmTone == 0:
                     globals.BUZZ.beep(0.1, 0.05, 5)
                 else:
@@ -614,6 +617,7 @@ class AlarmClock(threading.Thread):
                 CM = globals.ClockMode
                 while not globals.B[3].is_pressed and CM == globals.ClockMode:
                     time.sleep(1)
+                globals.display_override.clear()
                 self.stop = True
             if not self.stop:
                 time.sleep(30)
