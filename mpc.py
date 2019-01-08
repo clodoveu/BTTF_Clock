@@ -133,7 +133,7 @@ def alarm(soundType=1):
     clear()
     n = 0
     for mp3file in glob.iglob(globals.RingtonesSource + '**/*.mp3', recursive=True):
-        add(mp3file)
+        add("file://"+mp3file)
         n += 1
     soundType = soundType % n + 1  # 1 to n
     play(soundType)

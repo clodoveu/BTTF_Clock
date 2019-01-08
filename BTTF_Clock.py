@@ -279,14 +279,14 @@ def shutdown():
     really_sd = False
 
     if active_time > 2.0:
+        globals.display_override.set()
         while not globals.B[3].is_pressed and not globals.B[5].is_pressed:
-            globals.display_override.set()
             print_str16('Shutdown?       ', override=True)
             write_display16()
             if globals.B[3].is_pressed:
                 really_sd = True
                 break
-            time.sleep(0.2)
+            time.sleep(0.1)
         if really_sd:
             clear_display16()
             print_str16('Shutdown in 1min', override=True)
