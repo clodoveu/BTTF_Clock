@@ -593,13 +593,11 @@ class AlarmClock(threading.Thread):
                 if globals.AlarmTone == 0:
                     globals.BUZZ.beep(0.1, 0.05, 5)
                 else:
-                    mpc.repeat('on')
                     mpc.clear()
                     mpc.alarm(globals.AlarmTone)
                 CM = globals.ClockMode
                 while not globals.B[3].is_pressed and CM == globals.ClockMode:
                     time.sleep(1)
-                mpc.repeat('off')
                 mpc.clear()
                 globals.display_override.clear()
                 self.stop = True
