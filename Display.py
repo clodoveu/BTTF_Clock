@@ -115,10 +115,11 @@ def clear_display16():
     write_display16()
 
 
-def write_display16():
+def write_display16(blink = 0):
     """ Writes the display buffer to the hardware
         The override parameter causes display not to take place if a global event is set
     """
+    set_blink16(blink)
     for i in range(0, 4):
         d[i].write_display()
 
@@ -129,6 +130,15 @@ def set_brightness16(br=15):
     """
     for i in range(0, 4):
         d[i].set_brightness(br)
+
+
+def set_blink16(freq=0):
+    """ Sets the displays blinkingb
+        default: no blink
+        possible values: off = 0; 2 Hz = 2; 1 Hz = 4; 0.5 Hz = 6
+    """
+    for i in range(0, 4):
+        d[i].set_blink(freq)
 
 
 def print_str16(value, justify_right=False, override=False):
