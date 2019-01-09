@@ -425,7 +425,7 @@ def ChessClock():
             print_str16("Whites    Blacks")
         else:
             print_str16("Blacks    Whites")
-        write_display16(4)
+        write_display16()
         time.sleep(0.2)
 
     if white_left:
@@ -593,11 +593,14 @@ class AlarmClock(threading.Thread):
                 if globals.AlarmTone == 0:
                     globals.BUZZ.beep(0.1, 0.05, 5)
                 else:
+                    mpc.repeat('on')
                     mpc.clear()
                     mpc.alarm(globals.AlarmTone)
                 CM = globals.ClockMode
                 while not globals.B[3].is_pressed and CM == globals.ClockMode:
                     time.sleep(1)
+                mpc.repeat('off')
+                mpc.clear()
                 globals.display_override.clear()
                 self.stop = True
             if not self.stop:

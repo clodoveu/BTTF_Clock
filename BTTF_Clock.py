@@ -282,7 +282,7 @@ def shutdown():
         globals.display_override.set()
         while not globals.B[3].is_pressed and not globals.B[5].is_pressed:
             print_str16('Shutdown?       ', override=True)
-            write_display16()
+            write_display16(2)
             if globals.B[3].is_pressed:
                 really_sd = True
                 break
@@ -290,7 +290,7 @@ def shutdown():
         if really_sd:
             clear_display16()
             print_str16('Shutdown in 1min', override=True)
-            write_display16()
+            write_display16(4)
             time.sleep(30)
             clear_display16()
             call('sudo shutdown now', shell=True)
