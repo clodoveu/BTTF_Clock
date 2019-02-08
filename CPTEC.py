@@ -59,7 +59,11 @@ def cptec_current_weather(airport_code):
         Servico: http://servicos.cptec.inpe.br/XML/estacao/SBBH/condicoesAtuais.xml
     """
     CPTEC_ATUAL_URL = 'http://servicos.cptec.inpe.br/XML/estacao/' + airport_code + '/condicoesAtuais.xml'
-    xml = urllib.request.urlopen(CPTEC_ATUAL_URL)
+    try:
+        xml = urllib.request.urlopen(CPTEC_ATUAL_URL)
+    except:
+        return "Current Weather: Error"
+
     xml_string_atual = xml.read()
     xml.close()
 
@@ -78,7 +82,11 @@ def cptec_forecast(city_code):
         disponivel em http://servicos.cptec.inpe.br/XML/listaCidades?city=sao paulo
     """
     CPTEC_PREV4_URL = 'http://servicos.cptec.inpe.br/XML/cidade/' + city_code + '/previsao.xml'
-    xml = urllib.request.urlopen(CPTEC_PREV4_URL)
+    try:
+        xml = urllib.request.urlopen(CPTEC_PREV4_URL)
+    except:
+        return "Weather Forecast: Error"
+
     xml_string_prev4 = xml.read()
     xml.close()
 
