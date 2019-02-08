@@ -133,7 +133,7 @@ def set_brightness16(br=15):
 
 
 def set_blink16(freq=0):
-    """ Sets the displays blinkingb
+    """ Sets the displays blinking
         default: no blink
         possible values: off = 0; 2 Hz = 2; 1 Hz = 4; 0.5 Hz = 6
     """

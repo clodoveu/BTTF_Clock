@@ -355,7 +355,7 @@ def Timer():
         else:
             print_str16('{:>16}'.format(td_format_milliseconds(dt)), True)
             set_decimal_point16(12)
-            write_display16(4)
+            write_display16()
             time.sleep(0.2)
             # if finish: beep timer finish
             if globals.AlarmTone == 0:
@@ -589,7 +589,7 @@ class AlarmClock(threading.Thread):
                 print("Wake up time")  # sound alarm
                 print_str16("Alarm Alarm " + self.alarmTime.strftime("%H%M"), override=True)
                 set_decimal_point16(13, print_override=True)
-                write_display16(4)
+                write_display16()
                 if globals.AlarmTone == 0:
                     globals.BUZZ.beep(0.1, 0.05, 5)
                 else:
