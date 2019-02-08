@@ -62,7 +62,7 @@ def cptec_current_weather(airport_code):
     try:
         xml = urllib.request.urlopen(CPTEC_ATUAL_URL)
     except:
-        return "Current Weather: Error"
+        return "Current Weather: Error "
 
     xml_string_atual = xml.read()
     xml.close()
@@ -85,7 +85,7 @@ def cptec_forecast(city_code):
     try:
         xml = urllib.request.urlopen(CPTEC_PREV4_URL)
     except:
-        return "Weather Forecast: Error"
+        return "Weather Forecast: Error "
 
     xml_string_prev4 = xml.read()
     xml.close()
