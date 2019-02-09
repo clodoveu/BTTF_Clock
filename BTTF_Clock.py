@@ -236,7 +236,7 @@ class DisplayThread(threading.Thread):
 
 
 button_hold_time = datetime.now()
-
+last_press_time = datetime.now()
 
 def button_held():
     """ Callback for when the MODE button is held -- action will take place when it is released
@@ -251,7 +251,7 @@ def change_mode():
     """ Change to the default clock mode with a long press
         Change to the next clock mode with a short press
     """
-    global button_hold_time
+    global button_hold_time, last_press_time
 
     br = datetime.now()  # time for button release
     # print("Release: {}".format(br))
@@ -263,8 +263,13 @@ def change_mode():
         globals.ClockMode = globals.DefaultClockMode
     elif active_time < 0.2:
         # print("Short press: {}".format(active_time))
-        globals.ClockMode += 1
+        td2 = datetime.now() - last_press_time
+        interval = td2.total_seconds()  # seconds since last mode change
+        if interval > 0.5:
+            globals.ClockMode += 1
+            last_press_time = datetime.now()
     print("ClockMode: {}".format(globals.ClockMode))
+
 
 def shutdown():
     """ Executes shutdown when button 6 is held for more than 5 seconds
@@ -282,7 +287,7 @@ def shutdown():
         globals.display_override.set()
         while not globals.B[3].is_pressed and not globals.B[5].is_pressed:
             print_str16('Shutdown?       ', override=True)
-            write_display16(2)
+            write_display16()
             if globals.B[3].is_pressed:
                 really_sd = True
                 break
@@ -290,7 +295,7 @@ def shutdown():
         if really_sd:
             clear_display16()
             print_str16('Shutdown in 1min', override=True)
-            write_display16(4)
+            write_display16()
             time.sleep(30)
             clear_display16()
             call('sudo shutdown now', shell=True)
