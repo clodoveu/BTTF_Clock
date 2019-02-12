@@ -55,16 +55,40 @@ and SDA and SCL ports. One header was connected to each display, and the fifth t
 
 The stereo speaker bonnet uses GPIO pins 18, 19 and 21, so those are unavailable for other connections.
 
-Buttons were then connected to the available GPIO pins: 12 (B0),21 (B1), 22 (B2), 23 (B3), 24 (B4), 27 (B5).
+Buttons were then connected to the available GPIO pins: 12 (B0),21 (B1), 22 (B2), 23 (B3), 24 (B4), 27 (B5). 
+The other side of the buttons is connected to the ground 
 
 I also connected a buzzer to pin 13, and used pin 16 to connect a shutdown pushbutton.
 
 
 # 3. Software components
 
-I installed a vanilla Raspbian in the SD card, and opted to leave the full graphic interface there.
-It was not necessary, and I could have opted for a headless installation, but there is enough space in the SD card
-for everything as it is, and further uses of the Pi would be possible.
+I installed Raspbian in the SD card, even though I would not use the GUI. 
+
+After booting, user is pi and password is raspberry.
+
+Run:
+
+``` 
+sudo raspi-config
+```
+And setup network options (hostname, WiFi), Localisation options (keyboard layout, time zone, locale), 
+Advanced options (expand filesystem, memory split -- remove memory from the GPU, not needed), Interface options (enable
+SSH and I2C)
+
+Edit /etc/hosts and change the last line to reflect the hostname:
+
+```
+127.0.0.1 bttf_clock
+```
+
+Reboot and check if WiFi is working, then install utilities:
+
+```
+apt-get update
+apt-get install vim
+apt-get install git
+```
 
 From the basic installation, activate SSH and GPIO, and also maybe VNC.
 
@@ -83,7 +107,7 @@ See https://learn.adafruit.com/led-backpack-displays-on-raspberry-pi-and-beagleb
 ```
 git clone https://github.com/adafruit/Adafruit_Python_LED_Backpack.git
 cd Adafruit_Python_LED_Backpack
-sudo python setup.py install
+sudo python3 setup.py install
 ```
 
 ### Stereo speaker bonnet
@@ -98,7 +122,7 @@ I took the additional step of activating the aplay script, but aplay caused all 
 and I ended up removing it.
 
 ### MPD / MPC
-The project uses MPD (Music Player Daemos) and MPC (Music Player Client), which run at the operating system level.
+The project uses MPD (Music Player Daemon) and MPC (Music Player Client), which run at the operating system level.
 Controls are simple calls to MPC with the appropriate command-line attribute using the call function of the
 processing Python module.
 

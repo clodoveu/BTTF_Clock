@@ -27,7 +27,7 @@ siglas_tempo = {
     'nct': "nublado possib chuva a tarde",
     'nd': "nao definido",
     'ne': "neve",
-    'np': "nublado e pancads de chuva",
+    'np': "nublado e pancadas de chuva",
     'npm': "nublado com pancadas pela manha",
     'npn': "nublado com pancadas a noite",
     'npp': "nublado com possib chuva",
