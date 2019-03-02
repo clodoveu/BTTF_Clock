@@ -314,11 +314,8 @@ def shutdown():
         set_brightness16(globals.Brightness)
 
 
-import socket
-
 def get_ip():
-    hostname = socket.gethostname()
-    ip = socket.gethostbyname(hostname)
+    ip = subprocess.check_output(["hostname", "-I"]).split()[0]
     return ip
 
 
