@@ -273,7 +273,7 @@ def change_mode():
 
 def shutdown():
     """ Executes shutdown when button 6 is held for more than 5 seconds
-        Button 3 (OK) confirms; Button 5 cancels
+        Button 6 (Shutdown/brightness) confirms; Button 5 cancels
         Short press: sets brightness of the display
     """
     global button_hold_time
@@ -285,10 +285,11 @@ def shutdown():
 
     if active_time > 2.0:
         globals.display_override.set()
-        while not globals.B[3].is_pressed and not globals.B[5].is_pressed:
+        time.sleep(1)
+        while not globals.B[6].is_pressed and not globals.B[5].is_pressed:
             print_str16('Shutdown?       ', override=True)
             write_display16()
-            if globals.B[3].is_pressed:
+            if globals.B[6].is_pressed:
                 really_sd = True
                 break
             time.sleep(0.2)
@@ -313,6 +314,14 @@ def shutdown():
         set_brightness16(globals.Brightness)
 
 
+def getIPaddress():
+    """ Gets the current IP address information
+    """
+    result = subprocess.check_output(['hostname', '-I'])
+    ip = result.split(" ")[0]
+    return ip
+
+
 def main():
     # initialization
     print("*** Starting: {}".format(datetime.now().strftime("%a %Y-%m-%d %H:%M.%S")))
@@ -327,6 +336,12 @@ def main():
     globals.B[0].when_released = change_mode
     globals.B[6].when_pressed = button_held  # SHUTDOWN button
     globals.B[6].when_released = shutdown
+
+    # get device's IP address and display it
+    print_str16(getIPaddress())
+    write_display16()
+    time.sleep(30)
+    clear_display16()
 
     # Threading start
     try:
