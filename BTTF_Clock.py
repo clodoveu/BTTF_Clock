@@ -313,13 +313,12 @@ def shutdown():
             globals.Brightness = 0
         set_brightness16(globals.Brightness)
 
+import socket
 
-def getIPaddress():
-    """ Gets the current IP address information
-    """
-    result = subprocess.check_output(['hostname', '-I'])
-    ip = result.split(" ")[0]
-    return ip
+def get_ip():
+    hostname = socket.gethostname()
+    IP = socket.gethostbyname(hostname)
+    return IP
 
 
 def main():
@@ -338,7 +337,7 @@ def main():
     globals.B[6].when_released = shutdown
 
     # get device's IP address and display it
-    print_str16(getIPaddress())
+    print_str16(get_ip())
     write_display16()
     time.sleep(30)
     clear_display16()
