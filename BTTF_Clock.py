@@ -313,12 +313,13 @@ def shutdown():
             globals.Brightness = 0
         set_brightness16(globals.Brightness)
 
+
 import socket
 
 def get_ip():
     hostname = socket.gethostname()
-    IP = socket.gethostbyname(hostname)
-    return IP
+    ip = socket.gethostbyname(hostname)
+    return ip
 
 
 def main():
