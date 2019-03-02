@@ -316,6 +316,7 @@ def shutdown():
 
 def get_ip():
     ip = subprocess.check_output(["hostname", "-I"]).split()[0]
+    print("IP address: {}".format(ip))
     return ip
 
 
