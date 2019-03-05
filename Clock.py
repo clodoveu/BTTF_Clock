@@ -229,6 +229,12 @@ def showIP():
         write_display16()
         time.sleep(1)
 
+def showIPonce():
+    """ Displays the current IP address only once, for the initialization display
+    """
+    print_str16(get_ip())
+    write_display16()
+
 
 def setAlarm():
     """ Sets an alarm time and activates the AlarmClock thread

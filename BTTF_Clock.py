@@ -332,7 +332,7 @@ def main():
     globals.B[6].when_released = shutdown
 
     # get device's IP address and display it
-    showIP()
+    showIPonce()
     time.sleep(10)
     clear_display16()
 
