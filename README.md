@@ -316,7 +316,38 @@ Button 6    Brightness change (short press)
 Button 2 + Button 4 in Mode 1 (BTTF clock): reload parameters file
 Button 1 + Button 5 in Mode 1 (BTTF clock): terminate program, Button 3 to confirm 
 
+# 9. Functions
 
+1. Back to the Future Clock: a clock in the format [MMM dd YYYY hh.mm] as in the movie
 
+2. Current weather: description from CPTEC/INPE of the current weather at the configured location
+
+3. Weather 1- to 4-day forecast: from CPTEC/INPE, number of days is configurable
+
+4. Time since date: time difference between now and a configured initial date
+
+5. Time to deadline: time remaining until a given deadline
+
+6. World clock: dates and times at several time zones, identified by representative cities, with indication of DST
+
+7. MP3 player: plays MP3 files in th device's SD card
+
+8. Internet radio: streams internet radio stations, choosing from a configurable list
+
+9. Seconds clock: a clock in the format [DoW dd/MM hh.mm.ss]
+
+10. Milliseconds clock: a clock in the format [dd/MM hh.mm.ss.mmm]
+
+11. Milliseconds chronometer
+
+12. Seconds chronometer
+
+13. Year-long alarm: set an alarm for a month, day, hour and minute. Alarm tones are configurable, or use the buzzer
+
+14. Timer: set hour, minute and second for a countdown
+
+15. Chess clock: set countdown game times for whites and blacks, set board side, buzzer when the time runs out
+
+16. IP address: show the device's IP address 
 
 

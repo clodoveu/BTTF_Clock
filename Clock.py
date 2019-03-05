@@ -210,6 +210,25 @@ def BTTF_Clock():
         time.sleep(1)
 
 
+def get_ip():
+    """ Get the device's IP address using hostname command
+    """
+    ip = subprocess.check_output(["hostname", "-I"]).split()[0].decode('utf-8')
+    print("IP address: {}".format(ip))
+    return ip
+
+
+def showIP():
+    """ Displays the current IP address
+    """
+    CM = globals.ClockMode
+    while CM == globals.ClockMode:
+        # get device's IP address and display it
+        print_str16(get_ip())
+        write_display16()
+        time.sleep(1)
+
+
 def setAlarm():
     """ Sets an alarm time and activates the AlarmClock thread
     """

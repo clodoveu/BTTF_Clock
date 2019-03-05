@@ -230,6 +230,8 @@ class DisplayThread(threading.Thread):
                 Timer()
             elif globals.ClockMode == 15:
                 ChessClock()
+            elif globals.ClockMode == 16:  # display the device's IP address
+                showIP()
             else:
                 globals.ClockMode = 1
             time.sleep(0.01)
@@ -261,7 +263,7 @@ def change_mode():
     if active_time > 2.0:
         # print("Long press: {}".format(active_time))
         globals.ClockMode = globals.DefaultClockMode
-    elif active_time < 0.2:
+    elif active_time < 0.3:
         # print("Short press: {}".format(active_time))
         td2 = datetime.now() - last_press_time
         interval = td2.total_seconds()  # seconds since last mode change
@@ -314,12 +316,6 @@ def shutdown():
         set_brightness16(globals.Brightness)
 
 
-def get_ip():
-    ip = subprocess.check_output(["hostname", "-I"]).split()[0].decode('utf-8')
-    print("IP address: {}".format(ip))
-    return ip
-
-
 def main():
     # initialization
     print("*** Starting: {}".format(datetime.now().strftime("%a %Y-%m-%d %H:%M.%S")))
@@ -336,9 +332,8 @@ def main():
     globals.B[6].when_released = shutdown
 
     # get device's IP address and display it
-    print_str16(get_ip())
-    write_display16()
-    time.sleep(30)
+    showIP()
+    time.sleep(10)
     clear_display16()
 
     # Threading start
