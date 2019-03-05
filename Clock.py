@@ -219,21 +219,21 @@ def get_ip():
     return ip
 
 
-def showIP():
-    """ Displays the current IP address
-    """
-    CM = globals.ClockMode
-    while CM == globals.ClockMode:
-        # get device's IP address and display it
-        print_str16(get_ip())
-        write_display16()
-        time.sleep(1)
-
 def showIPonce():
     """ Displays the current IP address only once, for the initialization display
     """
     print_str16(get_ip())
     write_display16()
+
+
+def showIP():
+    """ Displays the current IP address
+    """
+    CM = globals.ClockMode
+    clear_display16()
+    showIPonce()
+    while CM == globals.ClockMode:
+        time.sleep(1)
 
 
 def setAlarm():
@@ -454,142 +454,143 @@ def ChessClock():
         write_display16()
         time.sleep(0.2)
 
-    if white_left:
-        white_button = 1
-        black_button = 5
-    else:
-        white_button = 5
-        black_button = 1
+    if CM == globals.ClockMode:
+        if white_left:
+            white_button = 1
+            black_button = 5
+        else:
+            white_button = 5
+            black_button = 1
 
-    lower_limit = [0, 0, 0]
-    upper_limit = [60, 60, 10]
+        lower_limit = [0, 0, 0]
+        upper_limit = [60, 60, 10]
 
-    # set playing time: Whites
+        # set playing time: Whites
 
-    msg = ['Whites s  ', 'Whites m  ', 'Whites h  ', 'Set       ']
-    count = [0, 0, 0]  # sec, min, hour
+        msg = ['Whites s  ', 'Whites m  ', 'Whites h  ', 'Set       ']
+        count = [0, 0, 0]  # sec, min, hour
 
-    pos = 0
-    print_str16("{3:10}{0:1}h{1:02}{2:02}".format(count[2], count[1], count[0], msg[pos]))
-    set_decimal_point16(13)
-    write_display16()
+        pos = 0
+        print_str16("{3:10}{0:1}h{1:02}{2:02}".format(count[2], count[1], count[0], msg[pos]))
+        set_decimal_point16(13)
+        write_display16()
 
-    while pos < 3 and CM == globals.ClockMode:
-        while (not globals.B[3].is_pressed) and (CM == globals.ClockMode):
-            if globals.B[2].is_pressed:
-                count[pos] -= 1
-            if globals.B[4].is_pressed:
-                count[pos] += 1
-            if count[pos] < lower_limit[pos]:
-                count[pos] = upper_limit[pos] - 1
-            if count[pos] >= upper_limit[pos]:
-                count[pos] = lower_limit[pos]
-            print_str16("{3:10}{0:1}h{1:02}{2:02}".format(count[2], count[1], count[0], msg[pos]))
-            set_decimal_point16(13)
-            write_display16()
+        while pos < 3 and CM == globals.ClockMode:
+            while (not globals.B[3].is_pressed) and (CM == globals.ClockMode):
+                if globals.B[2].is_pressed:
+                    count[pos] -= 1
+                if globals.B[4].is_pressed:
+                    count[pos] += 1
+                if count[pos] < lower_limit[pos]:
+                    count[pos] = upper_limit[pos] - 1
+                if count[pos] >= upper_limit[pos]:
+                    count[pos] = lower_limit[pos]
+                print_str16("{3:10}{0:1}h{1:02}{2:02}".format(count[2], count[1], count[0], msg[pos]))
+                set_decimal_point16(13)
+                write_display16()
+                time.sleep(0.2)
             time.sleep(0.2)
-        time.sleep(0.2)
-        pos += 1
-        if CM == globals.ClockMode:  # timer set: display
-            print_str16("{3:10}{0:1}h{1:02}{2:02}".format(count[2], count[1], count[0], msg[pos]))
-            set_decimal_point16(13)
-            write_display16()
-            time.sleep(1)
+            pos += 1
+            if CM == globals.ClockMode:  # timer set: display
+                print_str16("{3:10}{0:1}h{1:02}{2:02}".format(count[2], count[1], count[0], msg[pos]))
+                set_decimal_point16(13)
+                write_display16()
+                time.sleep(1)
 
-    tw = timedelta(seconds=count[0] + 60 * count[1] + 60 * 60 * count[2])  # seconds
+        tw = timedelta(seconds=count[0] + 60 * count[1] + 60 * 60 * count[2])  # seconds
 
-    msg = ['Blacks s  ', 'Blacks m  ', 'Blacks h  ', 'Set       ']
-    # keep the count vector as a default for the blacks, or set count = [0, 0, 0]  # sec, min, hour
+        msg = ['Blacks s  ', 'Blacks m  ', 'Blacks h  ', 'Set       ']
+        # keep the count vector as a default for the blacks, or set count = [0, 0, 0]  # sec, min, hour
 
-    # set playing time: Blacks
-    pos = 0
-    print_str16("{3:10}{0:1}h{1:02}{2:02}".format(count[2], count[1], count[0], msg[pos]))
-    set_decimal_point16(13)
-    write_display16()
+        # set playing time: Blacks
+        pos = 0
+        print_str16("{3:10}{0:1}h{1:02}{2:02}".format(count[2], count[1], count[0], msg[pos]))
+        set_decimal_point16(13)
+        write_display16()
 
-    while pos < 3 and CM == globals.ClockMode:
-        while (not globals.B[3].is_pressed) and (CM == globals.ClockMode):
-            if globals.B[2].is_pressed:
-                count[pos] -= 1
-            if globals.B[4].is_pressed:
-                count[pos] += 1
-            if count[pos] < lower_limit[pos]:
-                count[pos] = upper_limit[pos] - 1
-            if count[pos] >= upper_limit[pos]:
-                count[pos] = lower_limit[pos]
-            print_str16("{3:10}{0:1}h{1:02}{2:02}".format(count[2], count[1], count[0], msg[pos]))
-            set_decimal_point16(13)
-            write_display16()
+        while pos < 3 and CM == globals.ClockMode:
+            while (not globals.B[3].is_pressed) and (CM == globals.ClockMode):
+                if globals.B[2].is_pressed:
+                    count[pos] -= 1
+                if globals.B[4].is_pressed:
+                    count[pos] += 1
+                if count[pos] < lower_limit[pos]:
+                    count[pos] = upper_limit[pos] - 1
+                if count[pos] >= upper_limit[pos]:
+                    count[pos] = lower_limit[pos]
+                print_str16("{3:10}{0:1}h{1:02}{2:02}".format(count[2], count[1], count[0], msg[pos]))
+                set_decimal_point16(13)
+                write_display16()
+                time.sleep(0.2)
             time.sleep(0.2)
-        time.sleep(0.2)
-        pos += 1
-        if CM == globals.ClockMode:  # timer set: display
-            print_str16("{3:10}{0:1}h{1:02}{2:02}".format(count[2], count[1], count[0], msg[pos]))
-            set_decimal_point16(13)
-            write_display16()
-            time.sleep(1)
+            pos += 1
+            if CM == globals.ClockMode:  # timer set: display
+                print_str16("{3:10}{0:1}h{1:02}{2:02}".format(count[2], count[1], count[0], msg[pos]))
+                set_decimal_point16(13)
+                write_display16()
+                time.sleep(1)
 
-    tb = timedelta(seconds=count[0] + 60 * count[1] + 60 * 60 * count[2])  # seconds
+        tb = timedelta(seconds=count[0] + 60 * count[1] + 60 * 60 * count[2])  # seconds
 
-    # wait for GO
-    clear_display16()
-    if white_left:
-        msg = "{:>6} GO {:>6}".format(td_format_seconds_6(tw), td_format_seconds_6(tb))
-    else:
-        msg = "{:>6} GO {:>6}".format(td_format_seconds_6(tb), td_format_seconds_6(tw))
-    print_str16(msg)
-    set_decimal_point16(3)
-    set_decimal_point16(13)
-    write_display16()
-    while not globals.B[3].is_pressed and CM == globals.ClockMode:
-        time.sleep(0.2)
-
-    # Running, Whites first
-    zero = timedelta(seconds=0)
-    finish = False
-    while not finish and CM == globals.ClockMode:
-
-        t0 = datetime.now()
-        # Whites clock running
-        while not finish and not globals.B[white_button].is_pressed and CM == globals.ClockMode:
-            t1 = datetime.now()
-            dt = t1 - t0
-            if tw - dt <= zero:
-                finish = True
-                globals.BUZZ.beep(0.1, 0.05, 5)
-            if white_left:
-                msg = "{:>6} WB {:>6}".format(td_format_seconds_6(tw - dt), td_format_seconds_6(tb))
-            else:
-                msg = "{:>6} BW {:>6}".format(td_format_seconds_6(tb), td_format_seconds_6(tw - dt))
-            print_str16(msg)
-            set_decimal_point16(3)
-            set_decimal_point16(13)
-            write_display16()
+        # wait for GO
+        clear_display16()
+        if white_left:
+            msg = "{:>6} GO {:>6}".format(td_format_seconds_6(tw), td_format_seconds_6(tb))
+        else:
+            msg = "{:>6} GO {:>6}".format(td_format_seconds_6(tb), td_format_seconds_6(tw))
+        print_str16(msg)
+        set_decimal_point16(3)
+        set_decimal_point16(13)
+        write_display16()
+        while not globals.B[3].is_pressed and CM == globals.ClockMode:
             time.sleep(0.2)
-        tw -= dt
 
-        if not finish:
+        # Running, Whites first
+        zero = timedelta(seconds=0)
+        finish = False
+        while not finish and CM == globals.ClockMode:
+
             t0 = datetime.now()
-            # Blacks clock running
-            while not finish and not globals.B[black_button].is_pressed and CM == globals.ClockMode:
+            # Whites clock running
+            while not finish and not globals.B[white_button].is_pressed and CM == globals.ClockMode:
                 t1 = datetime.now()
                 dt = t1 - t0
-                if tb - dt <= zero:
+                if tw - dt <= zero:
                     finish = True
                     globals.BUZZ.beep(0.1, 0.05, 5)
                 if white_left:
-                    msg = "{:>6} WB {:>6}".format(td_format_seconds_6(tw), td_format_seconds_6(tb - dt))
+                    msg = "{:>6} WB {:>6}".format(td_format_seconds_6(tw - dt), td_format_seconds_6(tb))
                 else:
-                    msg = "{:>6} BW {:>6}".format(td_format_seconds_6(tb - dt), td_format_seconds_6(tw))
+                    msg = "{:>6} BW {:>6}".format(td_format_seconds_6(tb), td_format_seconds_6(tw - dt))
                 print_str16(msg)
                 set_decimal_point16(3)
                 set_decimal_point16(13)
                 write_display16()
                 time.sleep(0.2)
-            tb -= dt
-    if finish:
-        while not globals.B[3].is_pressed and CM == globals.ClockMode:  # wait for GO or MODE
-            time.sleep(0.2)
+            tw -= dt
+
+            if not finish:
+                t0 = datetime.now()
+                # Blacks clock running
+                while not finish and not globals.B[black_button].is_pressed and CM == globals.ClockMode:
+                    t1 = datetime.now()
+                    dt = t1 - t0
+                    if tb - dt <= zero:
+                        finish = True
+                        globals.BUZZ.beep(0.1, 0.05, 5)
+                    if white_left:
+                        msg = "{:>6} WB {:>6}".format(td_format_seconds_6(tw), td_format_seconds_6(tb - dt))
+                    else:
+                        msg = "{:>6} BW {:>6}".format(td_format_seconds_6(tb - dt), td_format_seconds_6(tw))
+                    print_str16(msg)
+                    set_decimal_point16(3)
+                    set_decimal_point16(13)
+                    write_display16()
+                    time.sleep(0.2)
+                tb -= dt
+        if finish:
+            while not globals.B[3].is_pressed and CM == globals.ClockMode:  # wait for GO or MODE
+                time.sleep(0.2)
 
 
 class AlarmClock(threading.Thread):
