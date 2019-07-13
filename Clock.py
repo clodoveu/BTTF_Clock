@@ -230,7 +230,7 @@ def Clock_temp_humid():
         print_str16(msg)
         set_decimal_point16(1)
         set_decimal_point16(7)
-        set_decimal_point16(12)
+        set_decimal_point16(13)
         write_display16()
         time.sleep(15)
 
