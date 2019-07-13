@@ -182,7 +182,7 @@ class DisplayThread(threading.Thread):
                     cleanupButtons()
                     globals.running.clear()
                     sys.exit()
-            elif flobals.ClockMode == 2:
+            elif globals.ClockMode == 2:
                 Clock_temp_humid()
             elif globals.ClockMode == 3:
                 current_weather(globals.AirportCode)
