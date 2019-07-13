@@ -37,6 +37,8 @@ Additional hardware (total cost about $6):
 - wiring
 - a corner cut from a small prototype printed circuit board
 
+A later addition: a DHT-22 temperature and humidity sensor
+
 Case, which I designed and built using MDF and lucite.
 
 
@@ -55,10 +57,12 @@ and SDA and SCL ports. One header was connected to each display, and the fifth t
 
 The stereo speaker bonnet uses GPIO pins 18, 19 and 21, so those are unavailable for other connections.
 
-Buttons were then connected to the available GPIO pins: 12 (B0),21 (B1), 22 (B2), 23 (B3), 24 (B4), 27 (B5). 
-The other side of the buttons is connected to the ground 
+Buttons were then connected to the available GPIO pins: 12 (B0), 22 (B1), 23 (B2), 24 (B3), 25 (B4), 27 (B5). 
+The other side of the buttons is connected to ground.
 
-I also connected a buzzer to pin 13, and used pin 16 to connect a shutdown pushbutton.
+The DHT-22 sensor is connected to 3.3V, ground and GPIO pin 17. 
+
+I also connected a buzzer to pin 13, and used pin 16 to connect a shutdown pushbutton (B6).
 
 
 # 3. Software components
@@ -158,6 +162,18 @@ audio_output {
 connection_timeout	"2000000"
 ```
 
+### Temperature and humidity sensor DHT-22
+See https://tutorials-raspberrypi.com/raspberry-pi-measure-humidity-temperature-dht11-dht22/
+
+Uses the Adafruit DHT library, installed as follows:
+
+```
+git clone https://github.com/adafruit/Adafruit_Python_DHT.git 
+cd Adafruit_Python_DHT
+sudo python setup.py install
+```
+
+
 ### Python libraries and modules:
 
 - Installed (with sudo pip3):
@@ -177,6 +193,9 @@ connection_timeout	"2000000"
   - time
   - re
 
+- Adafruit
+  - Adafruit_DHT
+  
 # 4. Configuration
 
 A configuration file (.BTTF_Clock) should be found in the application's folder.
@@ -268,6 +287,8 @@ http://158.69.38.194:9098/stream, Cinemix
 
 I developed a module to get and print in the 16-digit alphanumeric display two types of weather information: current
 weather and 4-day forecasts. Both are for Brazil and come from CPTEC/INPE, See http://servicos.cptec.inpe.br/XML/
+
+The module also contains code for the temperature and humidity sensor, DHT-22.
 
 # 7. Initialization at boot
 

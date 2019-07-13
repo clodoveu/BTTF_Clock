@@ -21,6 +21,9 @@ from datetime import datetime
 from datetime import timedelta
 from icu import Locale, DateFormat, ICUtzinfo, TimeZone
 
+# Sensors
+import Adafruit_DHT
+
 # Project-specific
 import globals
 import mpc
@@ -134,6 +137,9 @@ def Chrono(mode=0):
         Button 4 = stop
         Button 1 = reset
         Button 0 exits the chronometer for another clock mode
+
+        TODO: continue chrono after stop has been pressed.
+        TODO: make the GO button work as GO/STOP
     """
     clear_display16()
     CM = globals.ClockMode  # detect change in MODE
@@ -167,6 +173,8 @@ def Chrono(mode=0):
         while (not globals.B[1].is_pressed) and (CM == globals.ClockMode):  # Waiting for RESET or MODE change
             time.sleep(0.2)
 
+        clear_display16()  # clear display before reset
+
         # if RESET, restart the loop
         # if MODE changed, exit the loop and the thread will redirect
 
@@ -197,6 +205,28 @@ def Clock():
         set_decimal_point16(13)
         write_display16()
         time.sleep(0.5)
+
+
+def Clock_temp_humid():
+    """ Reads the DHT-22 sensor for the current temperature and humidity
+    """
+    clear_display16()
+
+    CM = globals.ClockMode
+    while CM == globals.ClockMode and globals.running.is_set():
+        humidity, temperature = Adafruit_DHT.read_retry(sensor, pin)
+        if humidity is none or temperature is not none:
+            humidity = 0.0
+            temperature = 0.0
+        d0 = datetime.now()
+        msg = d0.strftime("%H%M ")
+        msg += "{0:+3.0f}C {1:3.0f}% ".format(temperature * 10, humidity * 10)
+        print_str16(msg)
+        set_decimal_point16(1)
+        set_decimal_point16(7)
+        set_decimal_point16(12)
+        write_display16()
+        time.sleep(15)
 
 
 def BTTF_Clock():

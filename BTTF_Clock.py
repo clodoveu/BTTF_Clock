@@ -182,17 +182,19 @@ class DisplayThread(threading.Thread):
                     cleanupButtons()
                     globals.running.clear()
                     sys.exit()
-            elif globals.ClockMode == 2:
-                current_weather(globals.AirportCode)
+            elif flobals.ClockMode == 2:
+                Clock_temp_humid()
             elif globals.ClockMode == 3:
-                weather_forecast(globals.CityCode, 4)
+                current_weather(globals.AirportCode)
             elif globals.ClockMode == 4:
-                TimeSinceDate(globals.FromDate)
+                weather_forecast(globals.CityCode, 4)
             elif globals.ClockMode == 5:
-                TimeToDeadline(globals.Deadline)
+                TimeSinceDate(globals.FromDate)
             elif globals.ClockMode == 6:
-                WorldClock()
+                TimeToDeadline(globals.Deadline)
             elif globals.ClockMode == 7:
+                WorldClock()
+            elif globals.ClockMode == 8:
                 initMP3()
                 init_MP3_playlist()
                 try:
@@ -204,7 +206,7 @@ class DisplayThread(threading.Thread):
                     clear_display16()
                     globals.running.clear()
                     sys.exit()
-            elif globals.ClockMode == 8:
+            elif globals.ClockMode == 9:
                 initMP3()
                 init_MP3_playlist(1)
                 try:
@@ -216,21 +218,21 @@ class DisplayThread(threading.Thread):
                     clear_display16()
                     globals.running.clear()
                     sys.exit()
-            elif globals.ClockMode == 9:
-                Clock()
             elif globals.ClockMode == 10:
-                Now_Milliseconds()
+                Clock()
             elif globals.ClockMode == 11:
-                Chrono()    # milliseconds chronometer
+                Now_Milliseconds()
             elif globals.ClockMode == 12:
-                Chrono(1)   # seconds chronometer
+                Chrono()    # milliseconds chronometer
             elif globals.ClockMode == 13:
-                setAlarm()
+                Chrono(1)   # seconds chronometer
             elif globals.ClockMode == 14:
-                Timer()
+                setAlarm()
             elif globals.ClockMode == 15:
+                Timer()
+            elif globals.ClockMode == 16:
                 ChessClock()
-            elif globals.ClockMode == 16:  # display the device's IP address
+            elif globals.ClockMode == 17:  # display the device's IP address
                 showIP()
             else:
                 globals.ClockMode = 1
@@ -288,10 +290,10 @@ def shutdown():
     if active_time > 2.0:
         globals.display_override.set()
         time.sleep(1)
-        while not globals.B[6].is_pressed and not globals.B[5].is_pressed:
+        while not globals.B[3].is_pressed and not globals.B[5].is_pressed:
             print_str16('Shutdown?       ', override=True)
             write_display16()
-            if globals.B[6].is_pressed:
+            if globals.B[3].is_pressed:
                 really_sd = True
                 break
             time.sleep(0.2)
@@ -319,6 +321,7 @@ def shutdown():
 def main():
     # initialization
     print("*** Starting: {}".format(datetime.now().strftime("%a %Y-%m-%d %H:%M.%S")))
+    globals.BUZZ.beep(0.1, 0.05, 5)
     print("Reading parameters...")
     getParameters()
 
