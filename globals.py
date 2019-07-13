@@ -38,6 +38,11 @@ B = [Button(12, hold_time=0.2, hold_repeat=True), Button(22), Button(23), Button
      Button(16, hold_time=0.2, hold_repeat=True)]
 
 BUZZ = Buzzer(13)
+
+# DHT22 sensor GPIO pin and type
+SensorPin = 17
+SensorType = 22
+
 running = threading.Event()  # Event to catch the end of the program and finish threads and infinite loops
 running.set()
 
