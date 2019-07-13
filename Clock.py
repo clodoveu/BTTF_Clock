@@ -215,12 +215,13 @@ def Clock_temp_humid():
     CM = globals.ClockMode
     while CM == globals.ClockMode and globals.running.is_set():
         humidity, temperature = Adafruit_DHT.read_retry(globals.SensorType, globals.SensorPin)
-        if humidity is none or temperature is not none:
+        if humidity is none or temperature is none:
             humidity = 0.0
             temperature = 0.0
         d0 = datetime.now()
         msg = d0.strftime("%H%M ")
         msg += "{0:+3.0f}C {1:3.0f}% ".format(temperature * 10, humidity * 10)
+        print(msg)
         print_str16(msg)
         set_decimal_point16(1)
         set_decimal_point16(7)
