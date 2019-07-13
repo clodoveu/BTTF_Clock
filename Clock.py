@@ -215,7 +215,7 @@ def Clock_temp_humid():
     CM = globals.ClockMode
     while CM == globals.ClockMode and globals.running.is_set():
         humidity, temperature = Adafruit_DHT.read_retry(globals.SensorType, globals.SensorPin)
-        if humidity is none or temperature is none:
+        if humidity is None or temperature is None:
             humidity = 0.0
             temperature = 0.0
         d0 = datetime.now()
