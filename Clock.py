@@ -206,6 +206,18 @@ def Clock():
         write_display16()
         time.sleep(0.5)
 
+def Get_temp_humid():
+    """ Reads the DHT-22 sensor for the current temperature and humidity
+        Returns a string with the measurements
+    """
+    humidity, temperature = Adafruit_DHT.read_retry(globals.SensorType, globals.SensorPin)
+    if humidity is None or temperature is None:
+        humidity = 0.0
+        temperature = 0.0
+    d0 = datetime.now()
+    msg = "{0:+3.0f}`C {1:3.0f}% ".format(temperature * 10, humidity * 10)
+    msg += d0.strftime("%H%M")
+    return msg
 
 def Clock_temp_humid():
     """ Reads the DHT-22 sensor for the current temperature and humidity
@@ -228,7 +240,7 @@ def Clock_temp_humid():
                 last_t = temperature
             d0 = datetime.now()
             msg = "{0:+3.0f}`C {1:3.0f}% ".format(temperature * 10, humidity * 10)
-            msg += d0.strftime("%H%M ")
+            msg += d0.strftime("%H%M")
             print(msg)
             print_str16(msg)
             set_decimal_point16(2)
