@@ -209,30 +209,36 @@ def Clock():
 
 def Clock_temp_humid():
     """ Reads the DHT-22 sensor for the current temperature and humidity
+        Measurements are taken once every 30 seconds
     """
     clear_display16()
     last_h = 0.0
     last_t = 0.0
 
+    i = 0
     CM = globals.ClockMode
     while CM == globals.ClockMode and globals.running.is_set():
-        humidity, temperature = Adafruit_DHT.read_retry(globals.SensorType, globals.SensorPin)
-        if humidity is None or temperature is None:
-            humidity = last_h
-            temperature = last_t
-        else:
-            last_h = humidity
-            last_t = temperature
-        d0 = datetime.now()
-        msg = d0.strftime("%H%M ")
-        msg += "{0:+3.0f}`C {1:3.0f}%".format(temperature * 10, humidity * 10)
-        print(msg)
-        print_str16(msg)
-        set_decimal_point16(1)
-        set_decimal_point16(7)
-        set_decimal_point16(13)
-        write_display16()
-        time.sleep(15)
+        if i == 0:
+            humidity, temperature = Adafruit_DHT.read_retry(globals.SensorType, globals.SensorPin)
+            if humidity is None or temperature is None:
+                humidity = last_h
+                temperature = last_t
+            else:
+                last_h = humidity
+                last_t = temperature
+            d0 = datetime.now()
+            msg = "{0:+3.0f}`C {1:3.0f}% ".format(temperature * 10, humidity * 10)
+            msg += d0.strftime("%H%M ")
+            print(msg)
+            print_str16(msg)
+            set_decimal_point16(2)
+            set_decimal_point16(8)
+            set_decimal_point16(13)
+            write_display16()
+            i += 1
+            if i > 30:
+                i = 0
+            time.sleep(1)
 
 
 def BTTF_Clock():
