@@ -256,13 +256,26 @@ def Clock_temp_humid():
 def BTTF_Clock():
     """ Prints the current date and time in the Back to the Future format
     """
+    i = 0
     CM = globals.ClockMode
     while CM == globals.ClockMode and globals.running.is_set():
-        d0 = datetime.now()
-        print_str16(d0.strftime("%b %d %Y %H%M").upper())
-        set_decimal_point16(13)
-        write_display16()
-        time.sleep(1)
+        if i == 30:
+            msg = Get_temp_humid()
+            print_str16(msg)
+            set_decimal_point(2)
+            set_decimal_point(9)
+            set_decimal_point(13)
+            write_display16()
+            time.sleep(1)
+        else:
+            d0 = datetime.now()
+            print_str16(d0.strftime("%b %d %Y %H%M").upper())
+            set_decimal_point16(13)
+            write_display16()
+            time.sleep(1)
+        i += 1
+        if i > 60:
+            i = 0
 
 
 def get_ip():
