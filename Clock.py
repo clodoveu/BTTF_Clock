@@ -259,14 +259,14 @@ def BTTF_Clock():
     i = 0
     CM = globals.ClockMode
     while CM == globals.ClockMode and globals.running.is_set():
-        if i == 30:
+        if i >= 30:
             msg = Get_temp_humid()
             print_str16(msg)
-            set_decimal_point(2)
-            set_decimal_point(9)
-            set_decimal_point(13)
+            set_decimal_point16(2)
+            set_decimal_point16(9)
+            set_decimal_point16(13)
             write_display16()
-            time.sleep(1)
+            time.sleep(5)
         else:
             d0 = datetime.now()
             print_str16(d0.strftime("%b %d %Y %H%M").upper())
