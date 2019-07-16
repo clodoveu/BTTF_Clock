@@ -255,11 +255,12 @@ def Clock_temp_humid():
 
 def BTTF_Clock():
     """ Prints the current date and time in the Back to the Future format
+        Temperature and humidity every ~15 seconds
     """
     i = 0
     CM = globals.ClockMode
     while CM == globals.ClockMode and globals.running.is_set():
-        if i == 30:
+        if i == 15:
             msg = Get_temp_humid()
             print_str16(msg)
             set_decimal_point16(2)
@@ -274,7 +275,7 @@ def BTTF_Clock():
             write_display16()
             time.sleep(1)
         i += 1
-        if i > 60:
+        if i >30:
             i = 0
 
 
