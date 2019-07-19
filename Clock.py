@@ -247,10 +247,10 @@ def Clock_temp_humid():
             set_decimal_point16(8)
             set_decimal_point16(13)
             write_display16()
-            i += 1
-            if i > 30:
-                i = 0
-            time.sleep(1)
+        i += 1
+        if i > 30:
+            i = 0
+        time.sleep(1)
 
 
 def BTTF_Clock():
