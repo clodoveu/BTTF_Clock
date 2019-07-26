@@ -68,7 +68,7 @@ def cptec_current_weather(airport_code):
     xml.close()
 
     weather_dict = xmltodict.parse(xml_string_atual)
-    return "Temp {}C {} Umid {}% ".format(int(weather_dict['metar']['temperatura']),
+    return "Temp {}`C {} Umid {}% ".format(int(weather_dict['metar']['temperatura']),
                                           weather_dict['metar']['tempo_desc'],
                                           int(weather_dict['metar']['umidade']))
 
