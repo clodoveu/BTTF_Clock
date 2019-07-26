@@ -97,8 +97,8 @@ def cptec_forecast(city_code):
         y, m, d = prev['dia'].split('-')
         msg += "{:2}/{:2} ".format(d, m)
         msg += siglas_tempo[prev['tempo']]
-        msg += " min " + prev['minima']
-        msg += " max " + prev['maxima']
+        msg += " min " + prev['minima'] + "`"
+        msg += " max " + prev['maxima'] + "`"
         msg += " UV {}".format(int(float(prev['iuv'])))
         dia.append(msg)
     return dia
